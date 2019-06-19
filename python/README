@@ -1,0 +1,7 @@
+This is the python directory for the implementation of common algorithms and data structure.
+The directory also contains unit test and a comprehensive API folowing ALGS4 implementation.
+alg4.cs.princeton.edu/code
+
+Books used in the implementation of the algortihms are : REF 1 : Algorithms 4th edition, Addison Wisley
+                                                         REF 2 : Data Structures and Algorithmic thinking with python ,CareerMonk
+                                                         REF 3 : Introduction to Algorithms third edition , MIT PRESS 
