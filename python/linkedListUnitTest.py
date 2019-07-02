@@ -129,52 +129,83 @@ def testInsertAtPos():
 
 def testDeleteAtPos():
     # fill list 
-    LIST_SIZE = 5 # 0-11
+    LIST_SIZE = 1 # 0-11
     llist = SimpleLinkedList()
-    for number in range(LIST_SIZE):
+    for number in range(LIST_SIZE): # items = 0-4
         llist.insertAtBeginning(number)
     llist.printList()
     #llist.printList()
     # edge positions 0
-    llist.insert(0,333)
+    llist.delete(0)
+    print("\n") 
     llist.printList()
-  
-    #try:
-     #   assert 333 == (llist.getHead().getItem()) ,f"insert @ pos == 0 doesnt work"
-    #except AssertionError as e:
-     #   print(e)
-    # Remember we insert before a Node
-    '''llist.insert(11,999)
-    #llist.printList()
-    llist.traverseList()
+    # we can play with delete at edge cases to show it is workuing
+
+def testSearch():
+    LIST_SIZE = 50 # 0-11
+    llist = SimpleLinkedList()
+    for number in range(LIST_SIZE): # items = 0-4
+        llist.insertAtBeginning(number)
+    llist.printList()
     try:
-        assert 999 == (llist.getTail().getItem()) ,f"insert @ end doesn't work"
 
-    except AssertionError as e:
-        print(e)
-    '''
-    # position at the middle
-    llist.insert(1,666)
-
-    llist.printList()
-    node = llist.search(666)
-    try:
-        assert 666 == node.getItem(), f"insert @ middle doesn't work"
-    except AssertionError as e:
-        print(e)
-
-    llist.insert(6,999)
-    llist.printList()
+        assert 48 == llist.search(48).getItem(),"Search  did not pass for item inside list"
     
-    llist.insert(8,999)
-    llist.printList()
+    except AssertionError as  e:
+        print({e})
+    
+    try:
 
+        assert 0 == llist.search(0).getItem(),"Search  did not pass for item at the end of the list"
+    
+    except AssertionError as  e:
+        print({e})
+
+    try:
+
+        assert 49 == llist.search(49).getItem(),"Search  did not pass for item at the begining of the list"
+    
+    except AssertionError as  e:
+        print({e})
+    
+    try:
+
+        assert None == llist.search(50),"Search  did not pass for item at the begining of the list"
+    
+    except AssertionError as  e:
+        print({e})
+
+def testMinumum():
+    LIST_SIZE = 50 # 0-11
+    llist = SimpleLinkedList()
+    for number in range(LIST_SIZE): # items = 0-4
+        llist.insertAtBeginning(random.randint(0,39))
+    llist.printList()
+    llist.minimum()
+
+    print(llist.getMin().getItem())
+  
+def testMaximum():
+    LIST_SIZE = 5 # 0-11
+    llist = SimpleLinkedList()
+    for number in range(LIST_SIZE): # items = 0-4
+        llist.insertAtBeginning(random.randint(0,39))
+    llist.printList()
+    llist.maximum()
+
+    print(llist.getMax().getItem())
+  
+  
 def main():
-    #testInsertAtBeginning()
-    #testDeleteFromBeginning()
-    #testInsertAtEnd()
-    #testDeleteAtEnd()
-    #testInsertAtPos()
-     testdeleteAtPost()
+    testInsertAtBeginning()
+    testDeleteFromBeginning()
+    testInsertAtEnd()
+    testDeleteAtEnd()
+    testInsertAtPos()
+    testDeleteAtPos()  
+    testSearch()
+    testMinumum()
+    testMaximum()
+    print("Passed all tests Yiiipppppiiiii")
     
 main()
