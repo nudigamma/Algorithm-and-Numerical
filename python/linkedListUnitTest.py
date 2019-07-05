@@ -195,17 +195,37 @@ def testMaximum():
 
     print(llist.getMax().getItem())
   
-  
+def testSuccessor():
+    LIST_SIZE = 5 # 0-11
+    llist = SimpleLinkedList()
+    for number in range(LIST_SIZE): # items = 0-4
+        llist.insertAtBeginning(random.randint(-39,39))
+    llist.printList()
+    node = llist.successor()
+    print(node.getItem())
+
+def testPredecessor():
+    LIST_SIZE = 5 # 0-11
+    llist = SimpleLinkedList()
+    for number in range(LIST_SIZE): # items = 0-4
+        llist.insertAtBeginning(random.randint(-39,39))
+    llist.printList()
+    node = llist.predecessor()
+    
+    print(node.getItem())
+    
 def main():
-    testInsertAtBeginning()
-    testDeleteFromBeginning()
-    testInsertAtEnd()
-    testDeleteAtEnd()
-    testInsertAtPos()
-    testDeleteAtPos()  
-    testSearch()
-    testMinumum()
-    testMaximum()
+    #testInsertAtBeginning()
+    #testDeleteFromBeginning()
+    #testInsertAtEnd()
+    #testDeleteAtEnd()
+    #testInsertAtPos()
+    #testDeleteAtPos()  
+    #testSearch()
+    #testMinumum()
+    #testMaximum()
+    #testSuccessor()
+    testPredecessor()
     print("Passed all tests Yiiipppppiiiii")
     
 main()
