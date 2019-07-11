@@ -1,17 +1,6 @@
 ''' Node.py implements a Node . Node is an element of a linked list'''
 
-
-class Nodev1:
-    ''' Single linked node'''
-    ''' REF page 142'''
-    def __init__(self,item,next):
-        self.item = item
-        self.next = next
-
-
-
-
-class Nodev2:
+class Node:
     ''' Single linked node'''
     ''' REF page 142'''
     def __init__(self,item, next):

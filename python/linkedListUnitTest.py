@@ -1,6 +1,7 @@
 '''Unit test for linked list API '''
 import random
 from LinkedList import SimpleLinkedList 
+from LinkedList import LinkedNumber
 #TODO: add lline and function for assertion to follow
 #TODO: write test failing to disk 
 
@@ -177,7 +178,7 @@ def testSearch():
 
 def testMinumum():
     LIST_SIZE = 50 # 0-11
-    llist = SimpleLinkedList()
+    llist = LinkedNumber()
     for number in range(LIST_SIZE): # items = 0-4
         llist.insertAtBeginning(random.randint(0,39))
     llist.printList()
@@ -187,7 +188,7 @@ def testMinumum():
   
 def testMaximum():
     LIST_SIZE = 5 # 0-11
-    llist = SimpleLinkedList()
+    llist = LinkedNumber()
     for number in range(LIST_SIZE): # items = 0-4
         llist.insertAtBeginning(random.randint(0,39))
     llist.printList()
@@ -197,7 +198,7 @@ def testMaximum():
   
 def testSuccessor():
     LIST_SIZE = 5 # 0-11
-    llist = SimpleLinkedList()
+    llist = LinkedNumber()
     for number in range(LIST_SIZE): # items = 0-4
         llist.insertAtBeginning(random.randint(-39,39))
     llist.printList()
@@ -206,7 +207,7 @@ def testSuccessor():
 
 def testPredecessor():
     LIST_SIZE = 5 # 0-11
-    llist = SimpleLinkedList()
+    llist = LinkedNumber()
     for number in range(LIST_SIZE): # items = 0-4
         llist.insertAtBeginning(random.randint(-39,39))
     llist.printList()
@@ -222,9 +223,9 @@ def main():
     #testInsertAtPos()
     #testDeleteAtPos()  
     #testSearch()
-    #testMinumum()
-    #testMaximum()
-    #testSuccessor()
+    testMinumum()
+    testMaximum()
+    testSuccessor()
     testPredecessor()
     print("Passed all tests Yiiipppppiiiii")
     

@@ -1,0 +1,1 @@
+g++ cppreview.cpp Node.cpp LinkedList.cpp -o test -I . -std=c++14

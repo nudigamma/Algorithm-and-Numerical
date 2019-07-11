@@ -1,5 +1,5 @@
 import math # has -inf and +inf variables defined
-import Node
+from Node import Node
 __liscence__ = "MIT"
 __revision__ = "v.01"
 __author__ = "Nadim Farhat nadim.farhat@gmail.com"
@@ -15,11 +15,10 @@ class SimpleLinkedList:
     hardware and compiler optimization ''' 
 
 
-    def __init__(self,head = None,tail=None,max=0,min = 0):
+    def __init__(self,head = None,tail=None):
         self.head = head
-        self.tail = None
-        self.min = 0 
-        self.max = 0
+        self.tail = tail
+       
 
 
     def getHead(self):
@@ -38,19 +37,13 @@ class SimpleLinkedList:
         ''' Sets the last node in the linked list to an address/reference'''
         self.tail = tail_ref
     
-    def getMax(self):
-        ''' Returns the node that contains the highest value '''
-        return self.max
-
-    def getMin(self):
-        ''' Returns the node that contains the highest value '''
-        return self.min
+   
    
 
     # computational complexity o(1)
     def insertAtBeginning(self, item):
         current  = self.head
-        self.head  = Node.Nodev2(item,current)
+        self.head  = Node(item,current)
         
     
     # computational complexity o(n)
@@ -79,7 +72,7 @@ class SimpleLinkedList:
             self.insertAtBeginning(item)
             return
         self.traverseList()
-        node = Node.Nodev2(item,None) # since it is an end node
+        node = Node(item,None) # since it is an end node
         self.tail.setNext(node)
 
      #for insertNode at whe n == pos 
@@ -95,7 +88,7 @@ class SimpleLinkedList:
         if  pos == 0:
             self.insertAtBeginning(item)
             return
-        new_node = Node.Nodev2(item,None)
+        new_node = Node(item,None)
         current = self.head
         for position in range(pos-1):
             if  current.getNext().getNext() != None:
@@ -141,7 +134,7 @@ class SimpleLinkedList:
         current.setNext(temp.getNext())
         temp.setNext(None)
         
-    def search(self,key):
+    def search(self,key): 
         '''A query that given a linked list and a key returns
             a reference to the node containing the key or none '''
         current = self.head
@@ -155,6 +148,24 @@ class SimpleLinkedList:
         # reached end and did not find the key returning None
         return None
     
+   
+
+    
+class LinkedNumber(SimpleLinkedList):
+    '''Inherits SimpleLinkedList , adds some functionality for number'''
+    def __init__(self,head = None,tail=None,max=0,min = 0):
+        super().__init__(head,tail)
+        self.min = 0 
+        self.max = 0
+
+    def getMax(self):
+        ''' Returns the node that contains the highest value '''
+        return self.max
+
+    def getMin(self):
+        ''' Returns the node that contains the highest value '''
+        return self.min
+
     def minimum(self): #
         # depends on the values of the items
         # assuming set of real numbers 
@@ -266,5 +277,3 @@ class SimpleLinkedList:
                 current = current.getNext()
 
         return predecessor_ref
-
-    
