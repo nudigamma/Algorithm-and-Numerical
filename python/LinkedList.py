@@ -68,6 +68,7 @@ class SimpleLinkedList:
     
     # computational complexity o(n)
     def insertAtEnd(self,item):
+        # assuming we dont have the tail
         if self.head == None:
             self.insertAtBeginning(item)
             return

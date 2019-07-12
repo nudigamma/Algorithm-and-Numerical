@@ -10,12 +10,13 @@ class SimpleLinkedList {
 
         SimpleLinkedList ();
         ~SimpleLinkedList();   
-        SimpleLinkedList(Node *,Node * );
+        SimpleLinkedList(double item);
         Node * GetHead();
         void  SetHead(Node *);
         Node * GetTail();
         void SetTail(Node *);
-        void InsertAtBeginning(double, Node*); 
+        void InsertAtBeginning( double, Node*);
+        void InsertAtEnd( double, Node *); 
         bool IsEmpty();
         void PrintList();
         int SetupTail();

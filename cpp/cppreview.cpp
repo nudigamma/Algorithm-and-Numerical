@@ -66,11 +66,26 @@ void testTailSetup()
     std::cout <<"The tail is points to item " << llist.GetTail()->GetItem() << "\n";
 }
 
+void testInsertAtEnd()
+{
+
+    SimpleLinkedList llist = SimpleLinkedList(0);
+    std::vector<int> range {1,2};
+    for (auto i:range)
+    {
+        llist.InsertAtBeginning(i,llist.GetHead());
+    }
+    //llist.PrintList();
+    llist.InsertAtEnd(666,llist.GetTail());
+    llist.PrintList();
+    std::cout << llist.GetHead()->GetNext()->GetNext()->GetNext()->GetItem() << "\n";
+}
 int main()
 {
     //test_node_creation();
     //testLinkedList();
-    testTailSetup();
-    
+    //testTailSetup();
+    //testInsertAtBeginning();
+    testInsertAtEnd();
 
 }

@@ -1,17 +1,17 @@
 #include "LinkedList.hpp"
 #include "iostream"
 
-SimpleLinkedList::SimpleLinkedList(Node * beginning, Node * end):
-_head{new Node}, _tail{new Node}
+SimpleLinkedList::SimpleLinkedList(double item):
+_head{new Node(item,nullptr)}
 {
-    _head = beginning;
-    _tail = end;
+    // explcitly assignemnt of head to tail for a single node
+    _tail = _head;
 }
 
 SimpleLinkedList::SimpleLinkedList():
-_head{new Node}, _tail{new Node} 
+_head{nullptr},_tail{nullptr} 
 {
- 
+
 }
 
 SimpleLinkedList::~SimpleLinkedList()
@@ -54,19 +54,38 @@ bool SimpleLinkedList::IsEmpty()
 
 }
 
-void SimpleLinkedList::InsertAtBeginning(double item, Node * beginning)
+void SimpleLinkedList::InsertAtBeginning(double item, Node *beginningPtr)
 {  
+    if (IsEmpty ())
+    {
+       Node * new_node = new Node(item,nullptr);
+       _head = new_node;
+       _tail = _head;
+    }
+    Node * new_node = new Node(item,beginningPtr);
+    _head = new_node;
+    return;
+} 
+
+void SimpleLinkedList::InsertAtEnd(double item, Node* endPtr)
+{
     if (IsEmpty ())
     {
         Node * new_node = new Node(item,nullptr);
         _head = new_node;
+        _tail = new_node;
         return;
-
     }
-    Node * new_node = new Node(item,beginning);
-    _head = new_node;
-} 
+    Node * new_node = new Node(item,nullptr);
+    endPtr->SetNext(new_node);
+    _tail = new_node;
+    return;
 
+    
+    
+
+
+}
 void SimpleLinkedList::PrintList()
 {
     for (Node* p = _head; p->GetNext() != nullptr; p = p->GetNext() )
