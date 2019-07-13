@@ -54,31 +54,37 @@ bool SimpleLinkedList::IsEmpty()
 
 }
 
-void SimpleLinkedList::InsertAtBeginning(double item, Node *beginningPtr)
+void SimpleLinkedList::InsertAtBeginning(double item)
 {  
     if (IsEmpty ())
     {
        Node * new_node = new Node(item,nullptr);
        _head = new_node;
        _tail = _head;
+       size++;
+       return;
     }
-    Node * new_node = new Node(item,beginningPtr);
+    Node * new_node = new Node(item,nullptr);
+    new_node->SetNext(_head);
     _head = new_node;
+    size++;
     return;
 } 
 
-void SimpleLinkedList::InsertAtEnd(double item, Node* endPtr)
+void SimpleLinkedList::InsertAtEnd(double item)
 {
     if (IsEmpty ())
     {
         Node * new_node = new Node(item,nullptr);
         _head = new_node;
         _tail = new_node;
+        size++;
         return;
     }
     Node * new_node = new Node(item,nullptr);
-    endPtr->SetNext(new_node);
+    _tail->SetNext(new_node);
     _tail = new_node;
+    size++;
     return;
 
     
@@ -88,9 +94,11 @@ void SimpleLinkedList::InsertAtEnd(double item, Node* endPtr)
 }
 void SimpleLinkedList::PrintList()
 {
-    for (Node* p = _head; p->GetNext() != nullptr; p = p->GetNext() )
+    Node * p = _head;
+    while (p)
     {
         std::cout << p->GetItem() << "\n";
+        p = p->GetNext();
     }
 }
 
@@ -124,3 +132,18 @@ int SimpleLinkedList::SetupTail()
     } // end of else 
     
 } // end of function
+
+void SimpleLinkedList::Insert(double item, int pos)
+{
+    if(IsEmpty())
+    {
+        InsertAtBeginning(item);
+        return;
+    }
+    if(pos < 0)
+    {
+        std::cout << "Negatives are not valid positions" << "\n";
+        return;
+    }
+
+}
