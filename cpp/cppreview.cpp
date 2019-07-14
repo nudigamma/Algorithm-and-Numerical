@@ -61,7 +61,8 @@ void testTailSetup()
     {
         llist.InsertAtBeginning(i);
     }
-    int count = llist.SetupTail();
+    llist.SetupTail();
+    int count = llist.GetSize();
     std::cout << "The list has" << count  << " Node\n";
     std::cout <<"The tail is points to item " << llist.GetTail()->GetItem() << "\n";
 }
@@ -80,12 +81,29 @@ void testInsertAtEnd()
     llist.PrintList();
     //std::cout << llist.GetHead()->GetNext()->GetNext()->GetNext()->GetItem() << "\n";
 }
+
+void testInsert()
+{
+    SimpleLinkedList llist = SimpleLinkedList();
+    std::vector<int> range {3,4,5,6};
+    for (auto i:range)
+    {
+        llist.InsertAtBeginning(i);
+    }
+    //llist.Insert(1,1);
+    //llist.PrintList();
+    llist.Insert(666,2);
+    llist.PrintList();
+
+
+}
 int main()
 {
     //test_node_creation();
     //testLinkedList();
     //testTailSetup();
     //testInsertAtBeginning();
-    testInsertAtEnd();
+    //testInsertAtEnd();
+    testInsert();
 
 }

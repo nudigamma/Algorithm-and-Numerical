@@ -16,18 +16,19 @@ class SimpleLinkedList {
         void  SetHead(Node *);
         Node * GetTail();
         void SetTail(Node *);
+        int  GetSize();
         void InsertAtBeginning( double);
         void InsertAtEnd(double); 
         bool IsEmpty(); // can be refactored as lambda
         void Insert(double,int);
         void PrintList();
-        int SetupTail();
+        void  SetupTail();
 
      private:
         Node * _head;
         Node * _tail;
         // Container must know their size
-        int size = 0;
+        int _size = 0;
 
 };
 

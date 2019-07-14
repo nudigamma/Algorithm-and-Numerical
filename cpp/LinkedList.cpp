@@ -42,6 +42,12 @@ void SimpleLinkedList::SetHead(Node * node)
     
 }
 
+int SimpleLinkedList::GetSize()
+{
+    return _size;
+}
+
+
 bool SimpleLinkedList::IsEmpty()
 {   
     if(_head)
@@ -61,13 +67,13 @@ void SimpleLinkedList::InsertAtBeginning(double item)
        Node * new_node = new Node(item,nullptr);
        _head = new_node;
        _tail = _head;
-       size++;
+       _size++;
        return;
     }
     Node * new_node = new Node(item,nullptr);
     new_node->SetNext(_head);
     _head = new_node;
-    size++;
+    _size++;
     return;
 } 
 
@@ -78,18 +84,14 @@ void SimpleLinkedList::InsertAtEnd(double item)
         Node * new_node = new Node(item,nullptr);
         _head = new_node;
         _tail = new_node;
-        size++;
+        _size++;
         return;
     }
     Node * new_node = new Node(item,nullptr);
     _tail->SetNext(new_node);
     _tail = new_node;
-    size++;
+    _size++;
     return;
-
-    
-    
-
 
 }
 void SimpleLinkedList::PrintList()
@@ -102,19 +104,19 @@ void SimpleLinkedList::PrintList()
     }
 }
 
-int SimpleLinkedList::SetupTail()
+void SimpleLinkedList::SetupTail()
 {
     if (IsEmpty())
     {
         std::cout << "List is empty do nothing";
-        return 0 ;
+        _size = 0 ;
     }
 
     if (_head->GetNext() == nullptr)
     {
         std::cout << "List has one node , tail == head " << std::endl;
         _tail = _head;
-        return 1;
+        _size = 1;
     }
 
     else 
@@ -128,22 +130,51 @@ int SimpleLinkedList::SetupTail()
             counter++;
         } // end of while level 0 
         _tail = p; 
-        return counter+1;
+        _size = counter+1;
     } // end of else 
     
 } // end of function
 
+
+/** inserts before a node  */
 void SimpleLinkedList::Insert(double item, int pos)
-{
-    if(IsEmpty())
-    {
-        InsertAtBeginning(item);
-        return;
-    }
+{   
     if(pos < 0)
     {
-        std::cout << "Negatives are not valid positions" << "\n";
+        std::cout << "Negatives are not valid positions\n";
         return;
     }
+    if(IsEmpty() || pos == 0)
+    {
+        InsertAtBeginning(item);
+        _size++;
+        return;
+    }
+    
 
-}
+    if (( pos +1 ) >= _size )
+
+    {
+        std::cout << "Position exceeds the size of the linked list\n";
+        return;
+    }
+    if (pos == _size -1)
+    {
+        InsertAtEnd(pos);
+        _size++;
+        return;
+    }
+    int pos_counter = 1;
+
+    Node *temp_ptr = _head;
+    while (pos_counter != pos)
+    {   
+        temp_ptr = temp_ptr->GetNext();
+        pos_counter++;
+    }
+    Node * new_node = new Node(item,temp_ptr->GetNext());
+    temp_ptr->SetNext(new_node);
+    _size++;
+
+
+} // end of function Insert
