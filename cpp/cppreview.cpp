@@ -94,9 +94,35 @@ void testInsert()
     //llist.PrintList();
     llist.Insert(666,2);
     llist.PrintList();
+}
 
+void testDeleteAtBeginning()
+{
+    SimpleLinkedList llist = SimpleLinkedList();
+    std::vector<int> range {3,4,5,6};
+    for (auto i:range)
+    {
+        llist.InsertAtBeginning(i);
+    }
+    llist.PrintList();
+    std::cout<<"Deleting! \n";
+    llist.DeleteAtBeginning();
+    llist.PrintList();
+    std::cout<<"Deleting! \n";
+    llist.DeleteAtBeginning();
+    llist.PrintList();
+    std::cout<<"Deleting! \n";
+    llist.DeleteAtBeginning();
+    llist.PrintList();
+    std::cout<<"Deleting! \n";
+    llist.DeleteAtBeginning();
+    llist.PrintList();
+    std::cout<<"Deleting! \n";
+    llist.DeleteAtBeginning();
+    llist.PrintList();
 
 }
+
 int main()
 {
     //test_node_creation();
@@ -104,6 +130,7 @@ int main()
     //testTailSetup();
     //testInsertAtBeginning();
     //testInsertAtEnd();
-    testInsert();
+    //testInsert();
+    testDeleteAtBeginning();
 
 }

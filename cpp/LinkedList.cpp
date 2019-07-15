@@ -1,5 +1,7 @@
 #include "LinkedList.hpp"
-#include "iostream"
+#include <iostream>
+#include <cmath>
+
 
 SimpleLinkedList::SimpleLinkedList(double item):
 _head{new Node(item,nullptr)}
@@ -178,3 +180,28 @@ void SimpleLinkedList::Insert(double item, int pos)
 
 
 } // end of function Insert
+
+double SimpleLinkedList::DeleteAtBeginning()
+{   
+    if(!_head)
+    {
+        std::cout<< "Linked list is empty\n";
+        return NAN;
+    }
+    if(!_head->GetNext())
+    {
+        double value {_head->GetItem()};
+        _size = 0;
+        _head = nullptr;
+        return value;
+
+    }
+    Node * tmpPtr {_head};
+    _head = _head->GetNext();
+    double value = tmpPtr->GetItem();
+    tmpPtr->SetNext(nullptr);
+    delete tmpPtr;
+    _size--;
+    return value;
+
+}// end of function DeleteAtBeginnning

@@ -21,6 +21,10 @@ class SimpleLinkedList {
         void InsertAtEnd(double); 
         bool IsEmpty(); // can be refactored as lambda
         void Insert(double,int);
+        
+        double DeleteAtBeginning();
+        double DeleteAtEnd();
+        double DeleteNode(int pos);
         void PrintList();
         void  SetupTail();
 
