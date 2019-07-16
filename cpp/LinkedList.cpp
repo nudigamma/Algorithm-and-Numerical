@@ -198,9 +198,82 @@ double SimpleLinkedList::DeleteAtBeginning()
     }
     Node * tmpPtr {_head};
     _head = _head->GetNext();
-    double value = tmpPtr->GetItem();
+    double value {tmpPtr->GetItem()};
     tmpPtr->SetNext(nullptr);
     delete tmpPtr;
+    _size--;
+    return value;
+
+}// end of function DeleteAtBeginnning
+
+double SimpleLinkedList::DeleteAtEnd()
+{   
+    if(!_head)
+    {
+        std::cout<< "Linked list is empty\n";
+        return NAN;
+    }
+    // single node
+    if(_head == _tail)
+    {
+        double value {_head->GetItem()};
+        _size = 0;
+        _head = nullptr;
+        return value;
+
+    }
+    Node * tmpPtr {_head};
+    while(tmpPtr->GetNext() != _tail)
+    {
+        tmpPtr = tmpPtr->GetNext();    
+    }
+    double value {_tail->GetItem() };
+    _tail = tmpPtr;
+    _tail->SetNext(nullptr);
+    tmpPtr = tmpPtr->GetNext();
+    delete tmpPtr;
+    _size--;
+    return value;
+
+}// end of function DeleteAtBeginnning
+
+double SimpleLinkedList::DeleteNode(int pos)
+{   
+    double value {0};
+    if(!_head)
+    {
+        std::cout<< "Linked list is empty\n";
+        return NAN;
+    }
+    // single node
+    if(pos < 0)
+    {
+        std::cout << "Can't take negative 0 values \n";
+        return NAN;
+    }
+    if (pos = 0)
+    {
+       value = DeleteAtBeginning();
+       return value;
+    }
+    if (pos == _size-1)
+    {
+        value = DeleteAtEnd();
+        return value;
+    }
+
+    Node * tmpPtr {_head};
+    int counter {1};
+
+    while(counter != pos)
+    {
+        tmpPtr = tmpPtr->GetNext();    
+        counter++;
+    }
+    value = tmpPtr->GetNext()->GetItem() ;
+    Node * deleteNode(tmpPtr->GetNext());
+    tmpPtr->SetNext(tmpPtr->GetNext()->GetNext());
+    delete deleteNode;
     _size--;
     return value;
 

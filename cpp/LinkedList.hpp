@@ -25,6 +25,8 @@ class SimpleLinkedList {
         double DeleteAtBeginning();
         double DeleteAtEnd();
         double DeleteNode(int pos);
+
+        
         void PrintList();
         void  SetupTail();
 

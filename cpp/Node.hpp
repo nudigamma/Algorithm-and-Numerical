@@ -8,7 +8,7 @@ public:
     Node();
     Node(double);
     Node(double,Node *);
-    
+    Node(Node*);
 
     double GetItem();
 

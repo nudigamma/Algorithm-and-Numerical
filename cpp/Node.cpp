@@ -4,16 +4,26 @@
 
 
 //  default contructor
-Node::Node(): _item{0}, _next{nullptr}{
+Node::Node(): _item{0}, _next{nullptr}
+{
 
 }
 
-Node::Node(double value ): _item{value}, _next{nullptr}{
+Node::Node(double value ): _item{value}, _next{nullptr}
+{
 
 }
 
+Node::Node(Node * next):_item(0), _next{next}
+{
 
-Node::Node(double value , Node * next_node): _item {value}, _next {next_node} {};
+};
+
+
+Node::Node(double value , Node * next_node): _item {value}, _next {next_node} 
+{
+    
+};
 
 double Node::GetItem(){
     return _item;
