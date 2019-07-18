@@ -12,23 +12,26 @@ class SimpleLinkedList {
         SimpleLinkedList ();
         ~SimpleLinkedList();   
         SimpleLinkedList(double item);
-        Node * GetHead();
-        void  SetHead(Node *);
-        Node * GetTail();
-        void SetTail(Node *);
-        int  GetSize();
-        void InsertAtBeginning( double);
-        void InsertAtEnd(double); 
-        bool IsEmpty(); // can be refactored as lambda
-        void Insert(double,int);
+        Node*  GetHead();
+        void   SetHead(Node *);
+        Node*  GetTail();
+        void   SetTail(Node *);
+        int    GetSize();
+        void   InsertAtBeginning( double);
+        void   InsertAtEnd(double); 
+        bool   IsEmpty(); // can be refactored as lambda
+        void   Insert(double,int);
         
         double DeleteAtBeginning();
         double DeleteAtEnd();
         double DeleteNode(int pos);
-
-        
-        void PrintList();
-        void  SetupTail();
+        Node * Search(double);
+        double Max();
+        double Min();
+        double Successor();
+        double Predecessor();
+        void   PrintList();
+        void   SetupTail();
 
      private:
         Node * _head;

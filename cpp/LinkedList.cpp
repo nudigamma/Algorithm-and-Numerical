@@ -1,6 +1,7 @@
 #include "LinkedList.hpp"
 #include <iostream>
 #include <cmath>
+#include <limits>
 
 
 SimpleLinkedList::SimpleLinkedList(double item):
@@ -248,18 +249,20 @@ double SimpleLinkedList::DeleteNode(int pos)
     // single node
     if(pos < 0)
     {
-        std::cout << "Can't take negative 0 values \n";
+        std::cout << "Can't take negative values \n";
         return NAN;
     }
-    if (pos = 0)
+    if (pos == 0)
     {
-       value = DeleteAtBeginning();
+       value = this->DeleteAtBeginning();
        return value;
     }
-    if (pos == _size-1)
+    
+     if (pos >= _size)
     {
-        value = DeleteAtEnd();
-        return value;
+        std::cout << "Linked list overflow \n";
+        return NAN;
+
     }
 
     Node * tmpPtr {_head};
@@ -278,3 +281,75 @@ double SimpleLinkedList::DeleteNode(int pos)
     return value;
 
 }// end of function DeleteAtBeginnning
+
+Node * SimpleLinkedList::Search(double key)
+{
+    if (_head == nullptr)
+    {
+        std::cout << "Empty linked list\n";
+        return nullptr;
+    }
+    Node * tmp_ptr = _head;
+    while(tmp_ptr != nullptr)
+    {   
+        if(tmp_ptr->GetItem() == key)
+        {  
+            std::cout <<"Key Found ! \n";
+            return tmp_ptr;
+        }
+        tmp_ptr = tmp_ptr->GetNext();
+    }
+
+    std::cout << "Reach the end of the list did not find your key \n";
+    return nullptr;
+}
+
+double  SimpleLinkedList::Max() // overload to return node
+{   
+    double inf = -std::numeric_limits<double>::infinity();
+    if (_head == nullptr)
+    {
+        std::cout << "Empty linked list\n";
+        return NAN;
+    }
+    
+    Node* tmp_ptr {_head};
+    
+    double max = inf;
+    while(tmp_ptr != nullptr)
+    {   
+        if( tmp_ptr->GetItem() > max)
+        {  
+            max = tmp_ptr->GetItem();
+            
+        }
+        tmp_ptr = tmp_ptr->GetNext();
+    }
+
+    return max;
+}
+
+double  SimpleLinkedList::Min() // overload to return node
+{   
+    double inf = std::numeric_limits<double>::infinity();
+    if (_head == nullptr)
+    {
+        std::cout << "Empty linked list\n";
+        return NAN;
+    }
+    
+    Node* tmp_ptr {_head};
+    
+    double min = inf;
+    while(tmp_ptr != nullptr)
+    {   
+        if( tmp_ptr->GetItem() < min)
+        {  
+            min = tmp_ptr->GetItem();
+            
+        }
+        tmp_ptr = tmp_ptr->GetNext();
+    }
+
+    return min;
+}

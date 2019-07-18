@@ -147,6 +147,65 @@ void testDeleteAtEnd()
     //llist.PrintList();
 
 }
+void testDeleteNode()
+
+{
+    SimpleLinkedList llist = SimpleLinkedList();
+    std::vector<int> range {1,2,3,4,5,6,7,8,9,10};
+    for (auto i:range)
+    {
+        llist.InsertAtBeginning(i);
+    }
+    llist.PrintList();
+    //std::cout<<"Deleting! \n";
+    //std::cout << llist.DeleteNode(10) << "\n";
+    ///llist.PrintList();
+    std::cout<<"Deleting! \n";
+    std::cout << llist.DeleteNode(0) << "\n";
+    //llist.PrintList();
+    //std::cout<<"Deleting! \n";
+    //std::cout << llist.DeleteNode(1) << "\n";
+    //llist.PrintList();
+    //std::cout<<"Deleting! \n";
+    //std::cout << llist.DeleteNode(5) << "\n";
+   // std::cout<<"Deleting! \n";
+    //std::cout << llist.DeleteNode(5) << "\n";
+    //llist.PrintList();
+
+}
+
+void testSearch()
+{
+    SimpleLinkedList llist = SimpleLinkedList();
+    std::vector<int> range {1,2,3,4,5,6,7,8,9,10};
+    for (auto i:range)
+    {
+        llist.InsertAtBeginning(i);
+    }
+    if(Node * n = llist.Search(111))
+    {
+      std::cout << n->GetItem() << std::endl;   
+    }
+    SimpleLinkedList llist1 = SimpleLinkedList();
+    if(Node * n = llist1.Search(111))
+    {
+        std::cout << n->GetItem() << std::endl;   
+    }
+}
+
+void testMinMax()
+{
+    SimpleLinkedList llist = SimpleLinkedList();
+    std::vector<int> range {999,2,0,5,6,7,8,9,10};
+    for (auto i:range)
+    {
+        llist.InsertAtBeginning(i);
+    }
+    
+    std::cout << " Max is " << llist.Max() << std::endl;
+    std::cout << " Min is " << llist.Min() << std::endl;
+    
+  }
 int main()
 {
     //test_node_creation();
@@ -156,5 +215,10 @@ int main()
     //testInsertAtEnd();
     //testInsert();
     //testDeleteAtBeginning();
-    testDeleteAtEnd();
+    //testDeleteAtEnd();
+    //testDeleteNode();
+    //testSearch();
+    testMinMax();
+
+
 }
