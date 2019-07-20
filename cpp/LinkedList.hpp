@@ -26,10 +26,11 @@ class SimpleLinkedList {
         double DeleteAtEnd();
         double DeleteNode(int pos);
         Node * Search(double);
-        double Max();
-        double Min();
-        double Successor();
-        double Predecessor();
+        Node* Max();
+        Node* Min();
+
+        Node* Successor();
+        Node* Predecessor();
         void   PrintList();
         void   SetupTail();
 

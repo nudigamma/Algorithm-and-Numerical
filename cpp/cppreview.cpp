@@ -196,14 +196,14 @@ void testSearch()
 void testMinMax()
 {
     SimpleLinkedList llist = SimpleLinkedList();
-    std::vector<int> range {999,2,0,5,6,7,8,9,10};
+    std::vector<int> range {-0,-2,-999,-5,-6,-7,-8,-9,1000};
     for (auto i:range)
     {
         llist.InsertAtBeginning(i);
     }
     
-    std::cout << " Max is " << llist.Max() << std::endl;
-    std::cout << " Min is " << llist.Min() << std::endl;
+    std::cout << " Min is " << llist.Min()->GetItem() << std::endl;
+    std::cout << " Predecessor is " << llist.Predecessor()->GetItem() << std::endl;
     
   }
 int main()

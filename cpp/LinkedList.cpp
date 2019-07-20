@@ -304,52 +304,131 @@ Node * SimpleLinkedList::Search(double key)
     return nullptr;
 }
 
-double  SimpleLinkedList::Max() // overload to return node
+Node* SimpleLinkedList::Max() // overload to return node
 {   
     double inf = -std::numeric_limits<double>::infinity();
     if (_head == nullptr)
     {
         std::cout << "Empty linked list\n";
-        return NAN;
+        return nullptr;
     }
     
     Node* tmp_ptr {_head};
-    
+    Node* max_ptr {_head};
     double max = inf;
     while(tmp_ptr != nullptr)
     {   
         if( tmp_ptr->GetItem() > max)
         {  
             max = tmp_ptr->GetItem();
-            
+            max_ptr = tmp_ptr;
         }
         tmp_ptr = tmp_ptr->GetNext();
     }
 
-    return max;
+    return max_ptr;
 }
 
-double  SimpleLinkedList::Min() // overload to return node
+Node* SimpleLinkedList::Min() // overload to return node
 {   
     double inf = std::numeric_limits<double>::infinity();
     if (_head == nullptr)
     {
         std::cout << "Empty linked list\n";
-        return NAN;
+        return nullptr;
     }
     
     Node* tmp_ptr {_head};
-    
+    Node * min_ptr{_head};
     double min = inf;
+
     while(tmp_ptr != nullptr)
     {   
         if( tmp_ptr->GetItem() < min)
         {  
             min = tmp_ptr->GetItem();
-            
+            min_ptr = tmp_ptr;
         }
         tmp_ptr = tmp_ptr->GetNext();
     }
 
-    return min;
+    return min_ptr;
+}
+
+Node* SimpleLinkedList::Successor()
+
+{
+    constexpr double inf = -std::numeric_limits<double>::infinity();
+    if (_head == nullptr)
+    {
+        std::cout << "Empty linked list\n";
+        return nullptr;
+    }
+    
+    Node* tmp_ptr {_head};
+    Node* second_max_ptr = (_head);
+    Node* max_ptr = Max();
+    double second_max = inf;
+    while(tmp_ptr != _tail)
+    {   
+        if( tmp_ptr == max_ptr)
+            tmp_ptr = tmp_ptr->GetNext();
+        else
+        {
+            if(tmp_ptr->GetItem()> second_max)
+                {   
+                    second_max = tmp_ptr->GetItem();
+                    second_max_ptr = tmp_ptr;
+                    tmp_ptr = tmp_ptr->GetNext();
+                }
+            else
+                {
+                    tmp_ptr = tmp_ptr->GetNext();
+                }
+            
+        }
+
+        
+    }
+
+    return second_max_ptr;
+}
+
+Node* SimpleLinkedList::Predecessor()
+
+{
+    constexpr double inf = std::numeric_limits<double>::infinity();
+    if (_head == nullptr)
+    {
+        std::cout << "Empty linked list\n";
+        return nullptr;
+    }
+    
+    Node* next_ptr {_head};
+    Node* second_min_ptr = (_head);
+    Node* min_ptr = Min();
+    double second_min = inf;
+    while(next_ptr != _tail)
+    {   
+        if( next_ptr == min_ptr)
+            next_ptr = next_ptr->GetNext();
+        else
+        {
+            if(next_ptr->GetItem() < second_min)
+                {   
+                    second_min = next_ptr->GetItem();
+                    second_min_ptr = next_ptr;
+                    next_ptr = next_ptr->GetNext();
+                }
+            else
+                {
+                    next_ptr = next_ptr->GetNext();
+                }
+            
+        }
+
+        
+    }
+
+    return second_min_ptr;
 }
