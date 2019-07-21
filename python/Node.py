@@ -8,14 +8,14 @@ class Node:
         self.next = next
 
 
-    def getItem(self):
+    def GetItem(self):
         return self.item
 
-    def getNext(self):
+    def GetNext(self):
         return self.next
 
-    def setItem(self,item):
+    def SetItem(self,item):
         self.item = item
 
-    def setNext(self,next):
+    def SetNext(self,next):
         self.next = next

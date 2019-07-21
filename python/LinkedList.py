@@ -21,19 +21,19 @@ class SimpleLinkedList:
        
 
 
-    def getHead(self):
+    def GetHead(self):
         ''' Returns the first Node in the linked list'''
         return self.head
     
-    def setHead(self,head_ref):
+    def SetHead(self,head_ref):
         ''' Sets the head of the linked list to an address/ref'''
         self.head = head_ref
     
-    def getTail(self):
+    def GetTail(self):
         ''' Returns the last node in the linked list'''
         return self.tail
     
-    def setTail(self,tail_ref):
+    def SetTail(self,tail_ref):
         ''' Sets the last node in the linked list to an address/reference'''
         self.tail = tail_ref
     
@@ -52,8 +52,8 @@ class SimpleLinkedList:
             print("Linked List is empty")
             return None
         current = self.head
-        while(current.getNext() != None):
-            current = current.getNext()
+        while(current.GetNext() != None):
+            current = current.GetNext()
         self.tail = current
 
     def printList(self):
@@ -61,10 +61,10 @@ class SimpleLinkedList:
             print("Linked List is empty")
             return None
         current = self.head
-        print(current.getItem())
-        while(current.getNext() != None):
-            current = current.getNext()
-            print(current.getItem())
+        print(current.GetItem())
+        while(current.GetNext() != None):
+            current = current.GetNext()
+            print(current.GetItem())
     
     # computational complexity o(n)
     def insertAtEnd(self,item):
@@ -74,7 +74,7 @@ class SimpleLinkedList:
             return
         self.traverseList()
         node = Node(item,None) # since it is an end node
-        self.tail.setNext(node)
+        self.tail.SetNext(node)
 
      #for insertNode at whe n == pos 
     
@@ -92,59 +92,62 @@ class SimpleLinkedList:
         new_node = Node(item,None)
         current = self.head
         for position in range(pos-1):
-            if  current.getNext().getNext() != None:
-                current = current.getNext()
+            if  current.GetNext().GetNext() != None:
+                current = current.GetNext()
             else:
                 print("linked list overflow, return linked list as is ")
                 return -1
         
-        new_node.setNext(current.getNext())
-        current.setNext(new_node)
+        new_node.SetNext(current.GetNext())
+        current.SetNext(new_node)
         
     
     
     def deleteFromBeginning(self):
         if self.head == None: # empty list
             return None
-        self.head = self.head.getNext()
+        self.head = self.head.GetNext()
     
     def deleteFromEnd(self):
-        if (self.head == None or self.head.getNext() == None):
+        if (self.head == None or self.head.GetNext() == None):
             self.head = None
             return
         current = self.head
-        while(current.getNext().getNext() != None):
-            current = current.getNext()
-        current.setNext(None) 
+        while(current.GetNext().GetNext() != None):
+            current = current.GetNext()
+        current.SetNext(None) 
         self.tail = current
-        
+
+    #TODO: check the return    
     def delete(self, pos):
         if self.head == None:
             return -1 
         if pos == 0:
             self.deleteFromBeginning()
             return None
+        if pos < 0:
+            return -1
         current  = self.head
         for position in range(pos-1):# quick reminder range will be from 0 to pos -1 
-            current = current.getNext()
+            current = current.GetNext()
             if current is self.tail:
                 print('''Overflow, please chose a different pos
                       returning linked list unchanged''')
                 return -1 
-        temp = current.getNext()
-        current.setNext(temp.getNext())
-        temp.setNext(None)
+        temp = current.GetNext()
+        current.SetNext(temp.GetNext())
+        temp.SetNext(None)
         
     def search(self,key): 
         '''A query that given a linked list and a key returns
             a reference to the node containing the key or none '''
         current = self.head
-        if current.getItem() == key: # first case 
+        if current.GetItem() == key: # first case 
             return current
         while(current != None):
-            if (current.getItem() == key):
+            if (current.GetItem() == key):
                 return current
-            current = current.getNext()
+            current = current.GetNext()
             
         # reached end and did not find the key returning None
         return None
@@ -173,7 +176,7 @@ class LinkedNumber(SimpleLinkedList):
         if self.head == None:
             print("Emtpy list ")
             return -1
-        if self.head.getNext() == None:
+        if self.head.GetNext() == None:
             return self.head
         
         minimum = math.inf
@@ -182,10 +185,10 @@ class LinkedNumber(SimpleLinkedList):
         ref_to_minimum = None
         
         while(current  != None):
-            if (current.getItem() < minimum):
-                minimum = current.getItem()
+            if (current.GetItem() < minimum):
+                minimum = current.GetItem()
                 ref_to_minimum = current     
-            current = current.getNext()
+            current = current.GetNext()
             
         self.min = ref_to_minimum
         
@@ -196,7 +199,7 @@ class LinkedNumber(SimpleLinkedList):
         if self.head == None:
             print("Emtpy list ")
             return None
-        if self.head.getNext() == None:
+        if self.head.GetNext() == None:
             return self.head
         
         maximum = -math.inf
@@ -205,10 +208,10 @@ class LinkedNumber(SimpleLinkedList):
         ref_to_max = None
         
         while(current != None):
-            if (current.getItem() > maximum):
-                maximum = current.getItem()
+            if (current.GetItem() > maximum):
+                maximum = current.GetItem()
                 ref_to_max = current
-            current = current.getNext()
+            current = current.GetNext()
             
                 
         self.max = ref_to_max
@@ -221,14 +224,14 @@ class LinkedNumber(SimpleLinkedList):
     # could be other methods i am not sure, please let me know any 
 
 
-    def successor(self): # o(n^2)
+    def successor(self): # o(2n) worst case ! o(n) is max is in the begining
 
         ''' First method  is easiest to implement, find max first and then compare to max the successor'''
         successor_ref = None
         if self.head == None:
             print("Emtpy list ")
             return None
-        if self.head.getNext() == None:
+        if self.head.GetNext() == None:
             return None
         
         second_maximum = -math.inf 
@@ -238,14 +241,14 @@ class LinkedNumber(SimpleLinkedList):
         max = self.getMax()
         while(current != None):
             if (current is max):
-                current = current.getNext() # skip
-            elif (current.getItem() > second_maximum):
-                second_maximum = current.getItem()
+                current = current.GetNext() # skip
+            elif (current.GetItem() > second_maximum):
+                second_maximum = current.GetItem()
                 successor_ref = current
                
-                current = current.getNext()
+                current = current.GetNext()
             else:
-                current = current.getNext()
+                current = current.GetNext()
 
 
         return successor_ref 
@@ -257,7 +260,7 @@ class LinkedNumber(SimpleLinkedList):
         if self.head == None:
             print("Emtpy list ")
             return None
-        if self.head.getNext() == None:
+        if self.head.GetNext() == None:
             return None
         
         second_minimum = + math.inf 
@@ -267,14 +270,14 @@ class LinkedNumber(SimpleLinkedList):
         min = self.getMin()
         while(current != None):
             if (current is min):
-                current = current.getNext() # skip
-            elif (current.getItem() < second_minimum):
+                current = current.GetNext() # skip
+            elif (current.GetItem() < second_minimum):
                 
-                second_minimum = current.getItem()
+                second_minimum = current.GetItem()
                 predecessor_ref= current
                
-                current = current.getNext()
+                current = current.GetNext()
             else:
-                current = current.getNext()
+                current = current.GetNext()
 
         return predecessor_ref
