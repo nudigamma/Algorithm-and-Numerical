@@ -1,2 +1,2 @@
-g++ -ggdb -c Node.cpp LinkedList.cpp -I . -std=c++17
-g++ -o cppreview Node.o LinkedList.o cppreview.cpp -std=c++17
+g++ -o test_templated_node test_templated_node.cpp -I . -std=c++17
+g++ -o test_linkedList_api test_linkedList_api.cpp -I . -std=c++17
