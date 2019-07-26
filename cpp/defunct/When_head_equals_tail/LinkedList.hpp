@@ -67,18 +67,8 @@ SimpleLinkedList<T>::~SimpleLinkedList()
 {   
     /** Hacky much ? */
     std::cout<< "Cleaning up linkedlist \n";
-    if (_head == _tail)
-    {
-        if(_head)
-            delete _head;
-    }
-    else 
-    {    
-        if(_tail)
-            delete _tail;
-        if(_head)
-            delete _head;
-    }
+    delete _head;
+    delete _tail;
 }   
 template<typename T>
 Node<T> * SimpleLinkedList<T>::GetHead ()

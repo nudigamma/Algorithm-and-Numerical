@@ -1,0 +1,3 @@
+g++ -o ~/build/test_templated_node test_templated_node.cpp -I ../ -std=c++17
+#g++ -o test_linkedList_api test_linkedList_api.cpp -I . -std=c++17
+g++ -o ~/build/linkedlistexercises linkedlistexercises.cpp -I ../ -std=c++17

@@ -1,0 +1,49 @@
+In this set of notes, I will write about the things that I was doing wrong before reaching an optimal code 
+state, by optimal code state , I mean a code that works and compiles. 
+My focus is on learning data structures and algorithms, I will try to learn the subtlities of python
+and C++ however this is not my main focus, therefore my code might contain memory leaks, it might not
+work for edge cases though I will do my best effort to give a code that can be a reference.
+Please help me in reviewing the code and the karma will be gratefull.
+
+-07/24/2019 Designing find , a templated function that is not a member of linked list
+-My first design in find in python was straightfoward and i did not have problem in testing it.
+-My first design in c++ for python gave me a lot of troubles
+
+the header for find was like that 
+template <typename T>
+bool  find (SimpleLinkedList<T> , T)
+
+then in a client code I was calling 
+
+find<std::string>(linkedlist, sometString)
+The program exectued correctly however 
+upon main exit *** Error in `./linkedlistexercises': free(): invalid pointer: 0x0000000002585cd0 ***
+
+I think this is what is happening since linkedlist is passed by copy to the function head
+The destructor is being called twice. once the copied object linked list scope is expired
+
+Cleaning up linkedlist  ==> copied object destructor
+Go fish 
+Cleaning up linkedlist ==> original object destructor being called and thus the free()
+
+template<typename T>
+SimpleLinkedList<T>::~SimpleLinkedList()
+{
+    delete _head;
+    delete _tail;
+}
+
+passing the object a pointer/reference of the object solves the problem
+
+
+-07/26/2019 Designing delete all instances of key, I designed a function that delete all the instances of a key in a linked list as I keep 
+deleting the nodes that contains key and assuming there is one node that has a non key item , the head and tail will be pointing to the same node
+the destructor of the list will come to delete the head and by aliasing it will try to delete the tail now a double free error happens as below
+
+
+Cleaning up linkedlist 
+*** Error in `/home/nadim/build/linkedlistexercises': double free or corruption (fasttop): 0x0000000001d8fc20 ***
+======= Backtrace: =========
+/lib/x86_64-linux-gnu/libc.so.6(+0x777e5)[0x7ff64e0057e5]
+
+---
