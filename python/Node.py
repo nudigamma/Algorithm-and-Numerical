@@ -19,3 +19,16 @@ class Node:
 
     def SetNext(self,next):
         self.next = next
+    
+
+class DoubleNode(Node):
+    def __init__(self,item,next, previous):
+        super().__init__(self,item,next)
+        self.previous = previous
+
+    def GetPrevious(self):
+        return self.previous
+
+    def SetPrevious(self,previous):
+        self.previous = previous
+        
