@@ -1,17 +1,43 @@
+The tag member function in the solution for the exercises, it means that the function
+was implemented as a part of API for linked list and this was done according the API 
+needed as per the requierments of the Introduction to algorithms 3rd edition(Cormen Chapter 10)
+
+
+
 1.3.19 Give a code fragment that removes the last node in a linked list whos first node is first
-in python python/LinkedList.py member function deleteFromEnd
-in c++ cpp/LinkedList.cpp member function DeleteAtEnd
+       *In python python/LinkedList.py member function deleteFromEnd
+       *In c++ cpp/LinkedList.hpp  member function DeleteAtEnd
 1.3.20 Write a method delete() that takes an int argument k and delete kth element in a linked list if it exists
-in python python/LinkedList.py member function delete
-in c++ cpp/LinkedList.cpp member function DeleteNode
+       *In python python/LinkedList.py member function delete
+       *In c++ cpp/LinkedList.hpp member function DeleteNode
 1.3.21 Write a method find() that takes a linkedlist and a string key as arguments and returns true if some node
-in the list has key as its item field, false otherwise
-in python python/linkedlistexercises.py
-in c++    cpp/linkedlistexercices.cpp
+       in the list has key as its item field, false otherwise
+       *In python python/linkedlistexercises.py funtction find()
+       *In c++    cpp/linkedlistexercices.hpp  funtction find()
 1.3.24 Write a method removeAfter() that takes a linked list node as argument and remove the node following the given one 
        and does nothing if the argument or the next field in the argument node in null
-in python python/linkedlistexercises.py
-in c++    cpp/linkedlistexercises.cpp
+       *In python python/linkedlistexercises.py function removeAfter()
+       *In c++    cpp/linkedlistexercises.hpp  function removeAfter()
 1.3.25 Write a method InsertBetween() that takes two linked list node arguments and inserts
        and inserts the second after the first on its list( and does nothing if either argument is null )
+       *In python python/linkedlistexercises.py function insertBetween()
+       *In c++    cpp/linkedlistexercises.hpp  function insertBetween()
+1.3.26 Write a method remove() that takes a linked list and a string key as arguments and removes
+       all of the nodes in the list that have key as its item field
+       *In python python/linkedlistexercises.py function remove()
+       *In c++    cpp/linkedlistexercises.hpp function remove()
+1.3.27 Write a method max() that takes a reference to the first node in a linked list as argument and returns
+       and returns the value of the maximum key in the list
+       *In python python/LinkedList.py member function max()
+       *In c++    cpp/LinkedList.hpp member function max()
+1.3.28 Develop a recursive solution to the previous question 
+       *In python python/linkedlistexercises.py  function rMax()
+       *In c++    cpp/linkedlistexercises.hpp member function max()
+1.3.29 Write a function that takes the first node in a linked list as argument
+       and destructively reverse the list and returning the first node in the result
+       **Iterative solution**
+       In python python/linkedlistexercises.py function 
+       In c++ cpp/LinkedListExercises.cpp
+       **Recursive solution 1**
 
+       

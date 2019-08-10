@@ -58,7 +58,7 @@ _head{new Node<T>(item,nullptr)}
 }
 template<typename T>
 SimpleLinkedList<T>::SimpleLinkedList():
-_head{new Node<T>(0,nullptr)},_tail{new Node<T>(0,nullptr)} 
+_head{nullptr},_tail{nullptr} 
 {
 
 }
@@ -257,11 +257,11 @@ T SimpleLinkedList<T>::DeleteAtBeginning()
         return value;
 
     }
-    Node<T>* tmpPtr {_head};
+    Node<T>* next_ptr {_head};
     _head = _head->GetNext();
-    T value {tmpPtr->GetItem()};
-    tmpPtr->SetNext(nullptr);
-    delete tmpPtr;
+    T value {next_ptr->GetItem()};
+    next_ptr->SetNext(nullptr);
+    delete next_ptr;
     _size--;
     return value;
 
@@ -283,16 +283,16 @@ T SimpleLinkedList<T>::DeleteAtEnd()
         return value;
 
     }
-    Node<T> * tmpPtr {_head};
-    while(tmpPtr->GetNext() != _tail)
+    Node<T> * next_ptr {_head};
+    while(next_ptr->GetNext() != _tail)
     {
-        tmpPtr = tmpPtr->GetNext();    
+        next_ptr = next_ptr->GetNext();    
     }
     T value {_tail->GetItem() };
-    _tail = tmpPtr;
+    _tail = next_ptr;
     _tail->SetNext(nullptr);
-    tmpPtr = tmpPtr->GetNext();
-    delete tmpPtr;
+    next_ptr = next_ptr->GetNext();
+    delete next_ptr;
     _size--;
     return value;
 
@@ -325,17 +325,17 @@ T SimpleLinkedList<T>::DeleteNode(int pos)
 
     }
 
-    Node<T>* tmpPtr {_head};
+    Node<T>* next_ptr {_head};
     int counter {1};
 
     while(counter != pos)
     {
-        tmpPtr = tmpPtr->GetNext();    
+        next_ptr = next_ptr->GetNext();    
         counter++;
     }
-    value = tmpPtr->GetNext()->GetItem() ;
-    Node<T>* deleteNode(tmpPtr->GetNext());
-    tmpPtr->SetNext(tmpPtr->GetNext()->GetNext());
+    value = next_ptr->GetNext()->GetItem() ;
+    Node<T>* deleteNode(next_ptr->GetNext());
+    next_ptr->SetNext(next_ptr->GetNext()->GetNext());
     delete deleteNode;
     _size--;
     return value;
@@ -349,15 +349,15 @@ Node<T> * SimpleLinkedList<T>::Search(T key)
         std::cout << "Empty linked list\n";
         return nullptr;
     }
-    Node<T>* tmp_ptr = _head;
-    while(tmp_ptr != nullptr)
+    Node<T>* next_ptr = _head;
+    while(next_ptr != nullptr)
     {   
-        if(tmp_ptr->GetItem() == key)
+        if(next_ptr->GetItem() == key)
         {  
             std::cout <<"Key Found ! \n";
-            return tmp_ptr;
+            return next_ptr;
         }
-        tmp_ptr = tmp_ptr->GetNext();
+        next_ptr = next_ptr->GetNext();
     }
 
     std::cout << "Reach the end of the list did not find your key \n";
@@ -373,17 +373,17 @@ Node<T>* SimpleLinkedList<T>::Max() // overload to return node
         return nullptr;
     }
     
-    Node<T>* tmp_ptr {_head};
+    Node<T>* next_ptr {_head};
     Node<T>* max_ptr {_head};
     T max = inf;
-    while(tmp_ptr != nullptr)
+    while(next_ptr != nullptr)
     {   
-        if( tmp_ptr->GetItem() > max)
+        if( next_ptr->GetItem() > max)
         {  
-            max = tmp_ptr->GetItem();
-            max_ptr = tmp_ptr;
+            max = next_ptr->GetItem();
+            max_ptr = next_ptr;
         }
-        tmp_ptr = tmp_ptr->GetNext();
+        next_ptr = next_ptr->GetNext();
     }
 
     return max_ptr;
@@ -398,18 +398,18 @@ Node<T>* SimpleLinkedList<T>::Min() // overload to return node
         return nullptr;
     }
     
-    Node<T>* tmp_ptr {_head};
+    Node<T>* next_ptr {_head};
     Node<T>* min_ptr{_head};
     T min = inf;
 
-    while(tmp_ptr != nullptr)
+    while(next_ptr != nullptr)
     {   
-        if( tmp_ptr->GetItem() < min)
+        if( next_ptr->GetItem() < min)
         {  
-            min = tmp_ptr->GetItem();
-            min_ptr = tmp_ptr;
+            min = next_ptr->GetItem();
+            min_ptr = next_ptr;
         }
-        tmp_ptr = tmp_ptr->GetNext();
+        next_ptr = next_ptr->GetNext();
     }
 
     return min_ptr;
@@ -429,25 +429,25 @@ Node<T>* SimpleLinkedList<T>::Successor()
         return nullptr;
     }
     
-    Node<T>* tmp_ptr {_head};
+    Node<T>* next_ptr {_head};
     Node<T>* second_max_ptr = (_head);
     Node<T>* max_ptr = Max();
     T second_max = inf;
-    while(tmp_ptr != _tail)
+    while(next_ptr != _tail)
     {   
-        if( tmp_ptr == max_ptr)
-            tmp_ptr = tmp_ptr->GetNext();
+        if( next_ptr == max_ptr)
+            next_ptr = next_ptr->GetNext();
         else
         {
-            if(tmp_ptr->GetItem()> second_max)
+            if(next_ptr->GetItem()> second_max)
                 {   
-                    second_max = tmp_ptr->GetItem();
-                    second_max_ptr = tmp_ptr;
-                    tmp_ptr = tmp_ptr->GetNext();
+                    second_max = next_ptr->GetItem();
+                    second_max_ptr = next_ptr;
+                    next_ptr = next_ptr->GetNext();
                 }
             else
                 {
-                    tmp_ptr = tmp_ptr->GetNext();
+                    next_ptr = next_ptr->GetNext();
                 }
             
         }

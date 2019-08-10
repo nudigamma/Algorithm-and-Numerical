@@ -2,7 +2,7 @@
 #define SEDGWICK_HPP
 
 #include "LinkedList.hpp"
-
+/** Protoypes */
 template <typename T>
 bool  find (SimpleLinkedList<T> *, T);
 // 
@@ -19,7 +19,17 @@ template <typename T>
 Node<T> * delete2(SimpleLinkedList<T> *,T);
 template <typename T>
 void remove(SimpleLinkedList<T> *,T);
+//
+template <typename T>
+SimpleLinkedList<T> * reverseList(SimpleLinkedList<T> * );
+// Exercise 1.2.
+template <typename T>
+void recursiveReverseList(SimpleLinkedList<T> * ,SimpleLinkedList<T> *);
 
+template <typename T>
+Node <T> * recursiveReverseSedgwick(Node<T> *);
+
+/** Implementation  */
 
 template <typename T>
 bool find(SimpleLinkedList<T> *list, T item)
@@ -115,5 +125,77 @@ void remove(SimpleLinkedList<T> * lst_ptr, T key)
 
     }
     return;  
+} // end of remove function
+
+template<typename T>
+T rMax(Node<T> * , T);
+
+template<typename T>
+T rMax(Node<T> * node , T max)
+{
+    if (node == nullptr)
+    {
+        return max;
+    }
+
+    else 
+    {
+        if(node->GetItem() > max)
+            max = node->GetItem();
+        return rMax(node->GetNext(),max);   
+    }
+}
+
+/** reverse linked list exericise 1.3.30  */
+template <typename T>
+SimpleLinkedList<T> * reverseList(SimpleLinkedList<T> * list)
+{
+    Node<T> * next_ptr = list->GetHead();
+    Node<T> * delete_ptr = next_ptr;
+    SimpleLinkedList<T> * reverse_list =  new SimpleLinkedList<T>();
+    while(next_ptr->GetNext())
+    {
+        reverse_list->InsertAtBeginning(next_ptr->GetItem());
+        next_ptr = next_ptr->GetNext();
+        list->SetHead(next_ptr);
+        if (delete_ptr)
+            delete delete_ptr;
+        delete_ptr = next_ptr;
+    } 
+    reverse_list->InsertAtBeginning(next_ptr->GetItem());
+    return reverse_list;
+}
+
+template<typename T>
+void recursiveReverseList (SimpleLinkedList<T> * l1, SimpleLinkedList<T> *l2)
+{
+    if (!(l1->GetHead()))
+
+        return;
+    
+    Node<T> * node_ptr = new Node<T>(l1->GetHead()->GetItem(),l2->GetHead());
+    Node<T> * delete_ptr = l1->GetHead();
+    l2->SetHead(node_ptr);
+
+    l1->SetHead(l1->GetHead()->GetNext());
+    delete delete_ptr;
+    return recursiveReverseList(l1,l2);
+}
+template <typename T>
+Node<T> * recursiveReverseSedgwick(Node<T> * first)
+{
+   
+    if (! first)
+        return nullptr;
+
+    if (!first->GetNext())
+        return first;
+
+    Node<T>  *second = first->GetNext();
+    Node<T>  *rest = recursiveReverseSedgwick(second);
+
+    second->SetNext(first);
+    first->SetNext(nullptr);
+    return rest;
 }
 #endif 
