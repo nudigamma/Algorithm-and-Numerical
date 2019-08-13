@@ -13,42 +13,42 @@ def testInsertAtBeginning():
     llist = SimpleLinkedList()
     llist.insertAtBeginning(3)
     try:
-        assert 3 == (llist.getHead().getItem()), f"Insert begining failed"
+        assert 3 == (llist.GetHead().getItem()), f"Insert begining failed"
     except AssertionError as e:
         print(e)
     llist.insertAtBeginning(4)
     try:
-        assert 4 == (llist.getHead().getItem()), "Insert begining failed"
+        assert 4 == (llist.GetHead().getItem()), "Insert begining failed"
 
     except AssertionError as e :
         print(e)
        # I don't think there is more edge cases, cleaning
-    llist.setHead(None)
+    llist.SetHead(None)
 
 def testDeleteFromBeginning():
 
     llist = SimpleLinkedList()
     (llist.deleteFromBeginning())
-    assert None == (llist.getHead()),"Delete Beginning of empty list failed"
+    assert None == (llist.GetHead()),"Delete Beginning of empty list failed"
     llist.insertAtBeginning(3)
     (llist.deleteFromBeginning())
-    assert None == (llist.getHead()),"Delete Beginning of a list with a single node failed"
+    assert None == (llist.GetHead()),"Delete Beginning of a list with a single node failed"
     llist.insertAtBeginning(3)
     llist.insertAtBeginning(4)
-    assert 4 == llist.getHead().getItem(), "Delete Beginning of a list with more than one time failed "
+    assert 4 == llist.GetHead().getItem(), "Delete Beginning of a list with more than one time failed "
       # I don't think there is more edge cases, cleaning
-    llist.setHead(None)
+    llist.SetHead(None)
 
 def testInsertAtEnd():
     llist = SimpleLinkedList()
     llist.insertAtEnd(3) # for empty list end is the beginning 
     try:
-        assert 3 == (llist.getHead().getItem()), f"Insert End empty list failed"
+        assert 3 == (llist.GetHead().getItem()), f"Insert End empty list failed"
     except AssertionError as e:
         print(e)
     llist.insertAtEnd(4) # for empty list end is the beginning 
     try:
-        assert 4 == (llist.getHead().getNext().getItem()), f"Insert One node list failed"
+        assert 4 == (llist.GetHead().getNext().getItem()), f"Insert One node list failed"
     except AssertionError as e:
         print(e)
 
@@ -58,14 +58,14 @@ def testDeleteAtEnd():
     llist = SimpleLinkedList()
     llist.deleteFromEnd()
     try:
-        assert None == (llist.getHead()), f"Delete End empty list failed"
+        assert None == (llist.GetHead()), f"Delete End empty list failed"
     except AssertionError as e:
         print(e)
     
     llist.insertAtEnd(4)
     llist.deleteFromEnd() 
     try:
-        assert None == (llist.getHead()), f"Delete  One node list failed"
+        assert None == (llist.GetHead()), f"Delete  One node list failed"
     except AssertionError as e:
         print(e)
     llist.insertAtEnd(3)
@@ -76,14 +76,14 @@ def testDeleteAtEnd():
     print('\n')
     llist.printList()
     try:
-        assert None == (llist.getHead().getNext().getNext()), f"Delete  One node list failed"
+        assert None == (llist.GetHead().GetNext().getNext()), f"Delete  One node list failed"
     except AssertionError as e:
         print(e)
     llist.deleteFromEnd()
     print('\n')
     llist.printList()
     try:
-        assert None == (llist.getHead().getNext()), f"Delete  One node list failed"
+        assert None == (llist.GetHead().getNext()), f"Delete  One node list failed"
     except AssertionError as e:
         print(e)
     print('end of testDelete at End\n')
@@ -100,7 +100,7 @@ def testInsertAtPos():
     llist.printList()
   
     #try:
-     #   assert 333 == (llist.getHead().getItem()) ,f"insert @ pos == 0 doesnt work"
+     #   assert 333 == (llist.GetHead().getItem()) ,f"insert @ pos == 0 doesnt work"
     #except AssertionError as e:
      #   print(e)
     # Remember we insert before a Node
@@ -231,14 +231,16 @@ def testSingleNode():
     #get next item 
     headValue = firstNode.GetNext().GetItem()
     try:
-        assert firstValue == headValue, "Different values for head, something is wrong"
-    except AssertionError as e:
-        print(f'{e}')    
-    tailValue =  secondNode.GetPrevious().GetItem()
-    try:
-        assert secondValue == tailValue, "Unexpected value for tail something is wrong"
+        assert secondValue == headValue, "Unexpected value for the head."
     except AssertionError as e:
         print(f'{e}')
+        exit()    
+    tailValue =  secondNode.GetPrevious().GetItem()
+    try:
+        assert firstValue == tailValue, "Unexpected value for the tail."
+    except AssertionError as e:
+        print(f'{e}')
+        exit()
 
 
         

@@ -64,6 +64,8 @@ class DoubleLinkedList:
         while(current.GetNext() != None):
             current = current.GetNext()
         self.tail = current
+    
+
 
     def printList(self):
         if self.head == None:
@@ -82,8 +84,10 @@ class DoubleLinkedList:
             self.insertAtBeginning(item)
             return
         self.traverseList()
-        node = Node(item,None) # since it is an end node
+        node = DoubleNode(item,None,self.tail) # since it is an end node
         self.tail.SetNext(node)
+        self.tail = node
+        return
 
      #for insertNode at whe n == pos 
     

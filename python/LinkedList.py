@@ -44,7 +44,8 @@ class SimpleLinkedList:
     def insertAtBeginning(self, item):
         current  = self.head
         self.head  = Node(item,current)
-        
+        if current is None:
+            self.tail = self.head
     
     # computational complexity o(n)
     def traverseList(self):
@@ -75,6 +76,9 @@ class SimpleLinkedList:
         self.traverseList()
         node = Node(item,None) # since it is an end node
         self.tail.SetNext(node)
+        self.tail = node
+        return
+        
 
      #for insertNode at whe n == pos 
     

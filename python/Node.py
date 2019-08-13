@@ -22,8 +22,10 @@ class Node:
     
 
 class DoubleNode(Node):
-    def __init__(self,item,next, previous):
-        super().__init__(self,item,next)
+
+    ''' DoubleNode inhirits from Node'''
+    def __init__(self,item,next,previous):
+        super().__init__(item,next)
         self.previous = previous
 
     def GetPrevious(self):

@@ -2,6 +2,10 @@
 import random
 from LinkedList import SimpleLinkedList 
 from LinkedList import LinkedNumber
+import unittest
+
+
+
 #TODO: add lline and function for assertion to follow
 #TODO: write test failing to disk 
 
@@ -12,44 +16,42 @@ def testInsertAtBeginning():
     llist = SimpleLinkedList()
     llist.insertAtBeginning(3)
     try:
-        assert 3 == (llist.getHead().getItem()), f"Insert begining failed"
+        assert 3 == (llist.GetHead().GetItem()), f"Insert begining failed"
     except AssertionError as e:
         print(e)
+        exit()
     llist.insertAtBeginning(4)
     try:
-        assert 4 == (llist.getHead().getItem()), "Insert begining failed"
+        assert 4 == (llist.GetHead().GetItem()), "Insert begining failed"
 
     except AssertionError as e :
         print(e)
+        exit()
        # I don't think there is more edge cases, cleaning
-    llist.setHead(None)
+    llist.SetHead(None)
+
+          
 
 def testDeleteFromBeginning():
 
     llist = SimpleLinkedList()
     (llist.deleteFromBeginning())
-    assert None == (llist.getHead()),"Delete Beginning of empty list failed"
+    assert None == (llist.GetHead()),"Delete Beginning of empty list failed"
     llist.insertAtBeginning(3)
     (llist.deleteFromBeginning())
-    assert None == (llist.getHead()),"Delete Beginning of a list with a single node failed"
+    assert None == (llist.GetHead()),"Delete Beginning of a list with a single node failed"
     llist.insertAtBeginning(3)
     llist.insertAtBeginning(4)
-    assert 4 == llist.getHead().getItem(), "Delete Beginning of a list with more than one time failed "
+    assert 4 == llist.GetHead().GetItem(), "Delete Beginning of a list with more than one time failed "
       # I don't think there is more edge cases, cleaning
-    llist.setHead(None)
+    llist.SetHead(None)
 
 def testInsertAtEnd():
-    llist = SimpleLinkedList()
-    llist.insertAtEnd(3) # for empty list end is the beginning 
-    try:
-        assert 3 == (llist.getHead().getItem()), f"Insert End empty list failed"
-    except AssertionError as e:
-        print(e)
-    llist.insertAtEnd(4) # for empty list end is the beginning 
-    try:
-        assert 4 == (llist.getHead().getNext().getItem()), f"Insert One node list failed"
-    except AssertionError as e:
-        print(e)
+    numbers = [1,3,4,56,78]
+    linked_list = SimpleLinkedList()
+    for number in numbers:
+        linked_list.insertAtEnd(number)
+        assert number == (linked_list.GetTail().GetItem()), "Unexpected value, @insertAtEnd"
 
 def testDeleteAtEnd():
 
@@ -57,14 +59,14 @@ def testDeleteAtEnd():
     llist = SimpleLinkedList()
     llist.deleteFromEnd()
     try:
-        assert None == (llist.getHead()), f"Delete End empty list failed"
+        assert None == (llist.GetHead()), f"Delete End empty list failed"
     except AssertionError as e:
         print(e)
     
     llist.insertAtEnd(4)
     llist.deleteFromEnd() 
     try:
-        assert None == (llist.getHead()), f"Delete  One node list failed"
+        assert None == (llist.GetHead()), f"Delete  One node list failed"
     except AssertionError as e:
         print(e)
     llist.insertAtEnd(3)
@@ -75,14 +77,14 @@ def testDeleteAtEnd():
     print('\n')
     llist.printList()
     try:
-        assert None == (llist.getHead().getNext().getNext()), f"Delete  One node list failed"
+        assert None == (llist.GetHead().GetNext().GetNext()), f"Delete  One node list failed"
     except AssertionError as e:
         print(e)
     llist.deleteFromEnd()
     print('\n')
     llist.printList()
     try:
-        assert None == (llist.getHead().getNext()), f"Delete  One node list failed"
+        assert None == (llist.GetHead().GetNext()), f"Delete  One node list failed"
     except AssertionError as e:
         print(e)
     print('end of testDelete at End\n')
@@ -99,7 +101,7 @@ def testInsertAtPos():
     llist.printList()
   
     #try:
-     #   assert 333 == (llist.getHead().getItem()) ,f"insert @ pos == 0 doesnt work"
+     #   assert 333 == (llist.GetHead().GetItem()) ,f"insert @ pos == 0 doesnt work"
     #except AssertionError as e:
      #   print(e)
     # Remember we insert before a Node
@@ -107,7 +109,7 @@ def testInsertAtPos():
     #llist.printList()
     llist.traverseList()
     try:
-        assert 999 == (llist.getTail().getItem()) ,f"insert @ end doesn't work"
+        assert 999 == (llist.getTail().GetItem()) ,f"insert @ end doesn't work"
 
     except AssertionError as e:
         print(e)
@@ -118,7 +120,7 @@ def testInsertAtPos():
     llist.printList()
     node = llist.search(666)
     try:
-        assert 666 == node.getItem(), f"insert @ middle doesn't work"
+        assert 666 == node.GetItem(), f"insert @ middle doesn't work"
     except AssertionError as e:
         print(e)
 
@@ -150,21 +152,21 @@ def testSearch():
     llist.printList()
     try:
 
-        assert 48 == llist.search(48).getItem(),"Search  did not pass for item inside list"
+        assert 48 == llist.search(48).GetItem(),"Search  did not pass for item inside list"
     
     except AssertionError as  e:
         print({e})
     
     try:
 
-        assert 0 == llist.search(0).getItem(),"Search  did not pass for item at the end of the list"
+        assert 0 == llist.search(0).GetItem(),"Search  did not pass for item at the end of the list"
     
     except AssertionError as  e:
         print({e})
 
     try:
 
-        assert 49 == llist.search(49).getItem(),"Search  did not pass for item at the begining of the list"
+        assert 49 == llist.search(49).GetItem(),"Search  did not pass for item at the begining of the list"
     
     except AssertionError as  e:
         print({e})
@@ -184,7 +186,7 @@ def testMinumum():
     llist.printList()
     llist.minimum()
 
-    print(llist.getMin().getItem())
+    print(llist.getMin().GetItem())
   
 def testMaximum():
     LIST_SIZE = 5 # 0-11
@@ -194,7 +196,7 @@ def testMaximum():
     llist.printList()
     llist.maximum()
 
-    print(llist.getMax().getItem())
+    print(llist.getMax().GetItem())
   
 def testSuccessor():
     LIST_SIZE = 5 # 0-11
@@ -203,7 +205,7 @@ def testSuccessor():
         llist.insertAtBeginning(random.randint(-39,39))
     llist.printList()
     node = llist.successor()
-    print(node.getItem())
+    print(node.GetItem())
 
 def testPredecessor():
     LIST_SIZE = 5 # 0-11
@@ -213,20 +215,22 @@ def testPredecessor():
     llist.printList()
     node = llist.predecessor()
     
-    print(node.getItem())
+    print(node.GetItem())
+
+
+class TestingLinkedListMethods(unittest.TestCase):
+    def test_traverseList(self):
+            numbers = [1,3,4,56,78]
+            linked_list = SimpleLinkedList()
+            for number in numbers:
+                linked_list.insertAtBeginning(number)
+                linked_list.traverseList()
+                self.assertEqual(linked_list.GetTail().GetItem(),numbers[0])
     
-def main():
-    #testInsertAtBeginning()
-    #testDeleteFromBeginning()
-    #testInsertAtEnd()
-    #testDeleteAtEnd()
-    #testInsertAtPos()
-    #testDeleteAtPos()  
-    #testSearch()
-    testMinumum()
-    testMaximum()
-    testSuccessor()
-    testPredecessor()
-    print("Passed all tests Yiiipppppiiiii")
-    
-main()
+def suite():
+    suite = unittest.TestSuite()
+    suite.addTest(TestingLinkedListMethods('test_traverseList'))
+    return suite
+if __name__ == "__main__":
+   runner = unittest.TextTestRunner()
+   runner.run(suite())
