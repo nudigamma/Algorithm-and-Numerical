@@ -2,4 +2,5 @@
 Implementation of Algorithms and Data structures in C++ and Python 3.x
 
 Contents
- simple linked lists
+ Simple Linked List (SimpleLinkedList) 
+ Double Linked List (DoubleLinkedList)
