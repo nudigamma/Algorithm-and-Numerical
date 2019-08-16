@@ -7,17 +7,16 @@ class Node:
         self.item = item
         self.next = next
 
-
-    def GetItem(self):
+    def get_item(self):
         return self.item
 
-    def GetNext(self):
+    def get_next(self):
         return self.next
 
-    def SetItem(self,item):
+    def set_item(self,item):
         self.item = item
 
-    def SetNext(self,next):
+    def set_next(self,next):
         self.next = next
     
 
@@ -28,9 +27,9 @@ class DoubleNode(Node):
         super().__init__(item,next)
         self.previous = previous
 
-    def GetPrevious(self):
+    def get_previous(self):
         return self.previous
 
-    def SetPrevious(self,previous):
+    def set_previous(self,previous):
         self.previous = previous
         

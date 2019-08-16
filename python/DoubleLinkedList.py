@@ -5,45 +5,55 @@ __revision__ = "v.01"
 __author__ = "Nadim Farhat nadim.farhat@gmail.com"
 
 class DoubleLinkedList:
-    ''' This class defines the API for a double linked list as defined by Sedgwick et all and Cormen et all'''
-    ''' if node.previous == None ==> Head '''
-    ''' if node.next == None ==> Tail '''
-    ''' def 1:  linked list is a recursive data structure that is either empty
-            or a reference to a ndoe having a generic item and a reference to a linked list Sedgwick et all "Algorithm 4th edition" 
-        def 2 : linked list is data structure in which objects are arranged in a linear order, Unlike an array where the order i
-            is determined by the indices. The order in a linked list is determeind by a pointer in each object . 
-    Simply a list can grow and shrink depending on the need of a program
-    The access to a linked list memory is not necessirally contiguous therefore it might be slow interms of memory access and might not use
-    hardware and compiler optimization ''' 
+    r""" This class defines the API for a double linked list as defined by Sedgwick et all and Cormen et all
+
+    Definition of a double linked list:
+
+    Each node has a previous reference points to the previous node
+    Each node has a next reference to the next node
+    The previous reference of the "head" of Double Linked List points to None
+    The next reference of the "head" of Double Linked List points to next node in the linked list
+    The previous reference of the "tail" of Double Linked List points to precedent node
+    The next reference of the "tail" of Double Linked List points to None
+
+    Textbook definitions :
+    def 1:  linked list is a recursive data structure that is either empty
+    or a reference to a node having a generic item and a reference to a linked list Sedgwick et all "Algorithm 4th edition" 
+    def 2 : linked list is data structure in which objects are arranged in a linear order, Unlike an array where the order i
+    is determined by the indices. The order in a linked list is determeind by a pointer in each object . Linked list a part of dynamic sets and can grow and shrink depending on the need of a program
+    The access to a linked list memory is not necessarilly contiguous therefore it might be slower than arrays "Introduction to Algorithms" 3rd Edition"
 
 
     def __init__(self,head = None,tail=None):
+        """ Initializes an empty list """
         self.head = head
         self.tail = tail
        
 
-
-    def GetHead(self):
-        ''' Returns the first Node in the linked list'''
+    def get_head(self):
+        """ Returns the first Node in the linked list """
         return self.head
     
-    def SetHead(self,head_ref):
-        ''' Sets the head of the linked list to an address/ref'''
+    def set_head(self,head_ref):
+        """ Sets the head of the linked list to an address/ref. 
+
+        Keyword arguments:
+        head_ref : reference to the Node Object
+        """
+        
         self.head = head_ref
     
-    def GetTail(self):
+    def get_tail(self):
         ''' Returns the last node in the linked list'''
         return self.tail
     
-    def SetTail(self,tail_ref):
+    def set_tail(self,tail_ref):
         ''' Sets the last node in the linked list to an address/reference'''
         self.tail = tail_ref
     
-   
-   
-
     # computational complexity o(1)
-    def insertAtBeginning(self, item):
+
+    def insert_at_beginning(self, item):
         if (self.head == None):
             new_node  = DoubleNode(item,None,None)
             self.head = new_node
@@ -56,25 +66,36 @@ class DoubleLinkedList:
 
     
     # computational complexity o(n)
-    def traverseList(self):
+    def traverse_list(self):
+        """Member function traverse_list
+           starts at the head and continues until it reaches
+           the end of the double linked list and sets the member tail to the last node"""
         if self.head == None:
             print("Linked List is empty")
             return None
         current = self.head
-        while(current.GetNext() != None):
-            current = current.GetNext()
+        while(current.get_next() != None):
+            current = current.get_next()
         self.tail = current
     
-
-
+    def reverse_traverse_list(self):
+        if self.tail == None:
+            print("Linked list is empty")
+            return None
+        current = self.tail
+        while(current.get_previous() != None):
+            current = current.get_previous()
+        self.head = current
+        
+    
     def printList(self):
         if self.head == None:
             print("Linked List is empty")
             return None
         current = self.head
         print(current.GetItem())
-        while(current.GetNext() != None):
-            current = current.GetNext()
+        while(current.get_next() != None):
+            current = current.get_next()
             print(current.GetItem())
     
     # computational complexity o(n)
@@ -105,13 +126,13 @@ class DoubleLinkedList:
         new_node = Node(item,None)
         current = self.head
         for position in range(pos-1):
-            if  current.GetNext().GetNext() != None:
-                current = current.GetNext()
+            if  current.get_next().get_next() != None:
+                current = current.get_next()
             else:
                 print("linked list overflow, return linked list as is ")
                 return -1
         
-        new_node.SetNext(current.GetNext())
+        new_node.SetNext(current.get_next())
         current.SetNext(new_node)
         
     
@@ -119,15 +140,15 @@ class DoubleLinkedList:
     def deleteFromBeginning(self):
         if self.head == None: # empty list
             return None
-        self.head = self.head.GetNext()
+        self.head = self.head.get_next()
     
     def deleteFromEnd(self):
-        if (self.head == None or self.head.GetNext() == None):
+        if (self.head == None or self.head.get_next() == None):
             self.head = None
             return
         current = self.head
-        while(current.GetNext().GetNext() != None):
-            current = current.GetNext()
+        while(current.get_next().get_next() != None):
+            current = current.get_next()
         current.SetNext(None) 
         self.tail = current
 
@@ -142,13 +163,13 @@ class DoubleLinkedList:
             return -1
         current  = self.head
         for position in range(pos-1):# quick reminder range will be from 0 to pos -1 
-            current = current.GetNext()
+            current = current.get_next()
             if current is self.tail:
                 print('''Overflow, please chose a different pos
                       returning linked list unchanged''')
                 return -1 
-        temp = current.GetNext()
-        current.SetNext(temp.GetNext())
+        temp = current.get_next()
+        current.SetNext(temp.get_next())
         temp.SetNext(None)
         
     def search(self,key): 
@@ -160,7 +181,7 @@ class DoubleLinkedList:
         while(current != None):
             if (current.GetItem() == key):
                 return current
-            current = current.GetNext()
+            current = current.get_next()
             
         # reached end and did not find the key returning None
         return None
@@ -168,7 +189,7 @@ class DoubleLinkedList:
    
 
     
-class LinkedNumber(SimpleLinkedList):
+class LinkedNumber(DoubleLinkedList):
     '''Inherits SimpleLinkedList , adds some functionality for number'''
     def __init__(self,head = None,tail=None,max=0,min = 0):
         super().__init__(head,tail)
@@ -189,7 +210,7 @@ class LinkedNumber(SimpleLinkedList):
         if self.head == None:
             print("Emtpy list ")
             return -1
-        if self.head.GetNext() == None:
+        if self.head.get_next() == None:
             return self.head
         
         minimum = math.inf
@@ -201,7 +222,7 @@ class LinkedNumber(SimpleLinkedList):
             if (current.GetItem() < minimum):
                 minimum = current.GetItem()
                 ref_to_minimum = current     
-            current = current.GetNext()
+            current = current.get_next()
             
         self.min = ref_to_minimum
         
@@ -212,7 +233,7 @@ class LinkedNumber(SimpleLinkedList):
         if self.head == None:
             print("Emtpy list ")
             return None
-        if self.head.GetNext() == None:
+        if self.head.get_next() == None:
             return self.head
         
         maximum = -math.inf
@@ -224,7 +245,7 @@ class LinkedNumber(SimpleLinkedList):
             if (current.GetItem() > maximum):
                 maximum = current.GetItem()
                 ref_to_max = current
-            current = current.GetNext()
+            current = current.get_next()
             
                 
         self.max = ref_to_max
@@ -244,7 +265,7 @@ class LinkedNumber(SimpleLinkedList):
         if self.head == None:
             print("Emtpy list ")
             return None
-        if self.head.GetNext() == None:
+        if self.head.get_next() == None:
             return None
         
         second_maximum = -math.inf 
@@ -254,14 +275,14 @@ class LinkedNumber(SimpleLinkedList):
         max = self.getMax()
         while(current != None):
             if (current is max):
-                current = current.GetNext() # skip
+                current = current.get_next() # skip
             elif (current.GetItem() > second_maximum):
                 second_maximum = current.GetItem()
                 successor_ref = current
                
-                current = current.GetNext()
+                current = current.get_next()
             else:
-                current = current.GetNext()
+                current = current.get_next()
 
 
         return successor_ref 
@@ -273,7 +294,7 @@ class LinkedNumber(SimpleLinkedList):
         if self.head == None:
             print("Emtpy list ")
             return None
-        if self.head.GetNext() == None:
+        if self.head.get_next() == None:
             return None
         
         second_minimum = + math.inf 
@@ -283,14 +304,14 @@ class LinkedNumber(SimpleLinkedList):
         min = self.getMin()
         while(current != None):
             if (current is min):
-                current = current.GetNext() # skip
+                current = current.get_next() # skip
             elif (current.GetItem() < second_minimum):
                 
                 second_minimum = current.GetItem()
                 predecessor_ref= current
                
-                current = current.GetNext()
+                current = current.get_next()
             else:
-                current = current.GetNext()
+                current = current.get_next()
 
         return predecessor_ref

@@ -226,7 +226,9 @@ class TestingLinkedListMethods(unittest.TestCase):
                 linked_list.insertAtBeginning(number)
                 linked_list.traverseList()
                 self.assertEqual(linked_list.GetTail().GetItem(),numbers[0])
-    
+                
+                
+                
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(TestingLinkedListMethods('test_traverseList'))
