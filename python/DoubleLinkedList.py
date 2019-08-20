@@ -75,7 +75,7 @@ class DoubleLinkedList:
         item : can be of any type 
         """
         #  If the list is empty 
-        if (self.head == None):
+        if (self.size == 0):
         # Make is a one node list where head and tail are the same
             new_node  = DoubleNode(item,None,None)
             self.head = new_node
@@ -98,7 +98,7 @@ class DoubleLinkedList:
             sets the tail for the linked list """
 
         # Empty list   
-        if self.head == None:
+        if self.size == 0:
             print("Linked List is empty")
             return None
         # Starts at the head
@@ -113,7 +113,7 @@ class DoubleLinkedList:
         """ Iterates from the end of the double list till the begining
             sets the head for the linked list """
         # Empty list
-        if self.tail == None:
+        if self.size == 0:
             print("Linked list is empty")
             return None
         # Starts at the tail
@@ -128,7 +128,7 @@ class DoubleLinkedList:
     def print_list(self):
         """ prints the content of the list """
         # Empty list
-        if self.head == None:
+        if self.size == 0:
             print("Linked List is empty")
             return None
         # Starts at head
@@ -142,7 +142,7 @@ class DoubleLinkedList:
     def reverse_print_list(self):
         """ prints the content of the list """
         # Empty list
-        if self.tail == None:
+        if self.size == 0:
             print("Linked List is empty")
             return None
         # Starts at tail
@@ -163,7 +163,7 @@ class DoubleLinkedList:
         item : can be of any type 
         """
         # Empty list
-        if self.head == None:
+        if self.size == 0:
             new_node  = DoubleNode(item,None,None)
             self.head = new_node
             self.tail = new_node
@@ -188,14 +188,16 @@ class DoubleLinkedList:
         item : can be of any type 
 
         """
-        # Empty 
-        if  self.head == None:
+        # Invalid size
+        if  self.size == 0:
             print("Empty list")
             return -1
-        # Invalid poition
+
+        # Invalid position
         if  pos < 0 or pos > (self.size -1):
             print("Invalid position")
             return -1
+
         # At head
         if  pos == 0:
             self.insert_at_beginning(item)
@@ -203,25 +205,20 @@ class DoubleLinkedList:
             self.size += 1
             return 0
 
-        # At tail
-        if pos == self.size -1:
-            self.insert_at_end(item)
-            self.size += 1
-            # Update the size
-            return 0
-        # any other position
+        # any other position ( size and position are valid )
 
         new_node = DoubleNode(item,None,None)
         # since we are mantaining a head and a tail and the size, at most insert at pos
         # is n/2
         # if the position belongs to the first half of the list start from the head 
 
-        if pos < self.size // 2:
+        if pos < (math.ceil(self.size/ 2.0)):
             current = self.head
             for position in range(pos-1):
                 current = current.get_next()
             # Insert the node            
             new_node.set_next(current.get_next())
+            new_node.set_previous(current)
             current.get_next().set_previous(new_node)
             current.set_next(new_node)
             # Update the size
@@ -232,10 +229,11 @@ class DoubleLinkedList:
             for position in range((self.size - pos)):
                 current = current.get_previous()
             # Insert the node 
-            new_node.set_previous(current.get_previous())
-            current.get_previous().set_next(new_node)
-            current.set_previous(new_node)
-            #update the size
+            new_node.set_previous(current)
+            new_node.set_next(current.get_next())
+            current.get_next().set_previous(new_node)
+            current.set_next(new_node)
+            # Update the size
             self.size += 1
              
 

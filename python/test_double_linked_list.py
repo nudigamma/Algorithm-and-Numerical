@@ -96,6 +96,26 @@ class TestInsertAtEnd(unittest.TestCase):
             self.assertEqual(node.get_item(),number)
             node = node.get_next()
 
+class TestInsert(unittest.TestCase):
+    """ These sets of function test, test the functionality of 
+    traverse and reverseTraverseList """
+    def test_invalid_size(self):
+    # First let us test if we can add a node for an empty list
+        dList = DoubleLinkedList()
+        self.assertEqual(dList.insert(0,4),-1)
+        self.assertEqual(dList.insert(-1,4),-1)
+        self.assertEqual(dList.insert(1,4),-1)
+
+    def test_invalid_pos(self):
+        # test_empty_dlist is the only edge case 
+        dList = DoubleLinkedList()
+        numbers = [19,20,23,100,-100,0]
+        #fills the list 
+        for number in numbers:
+            dList.insert_at_end(number)
+        size = dList.get_size()
+        print(size)
+
 
 def suite():
     suite = unittest.TestSuite()
@@ -106,6 +126,8 @@ def suite():
     suite.addTest(TestInsertAtBeginning('test_one_or_more_nodes'))
     suite.addTest(TestInsertAtEnd('test_empty_dlist'))
     suite.addTest(TestInsertAtEnd('test_one_or_more_nodes'))
+    suite.addTest(TestInsert('test_invalid_size'))
+    suite.addTest(TestInsert('test_invalid_pos'))
     return suite
 
 if __name__ == "__main__":
