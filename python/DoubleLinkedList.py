@@ -24,6 +24,7 @@ class DoubleLinkedList:
     The access to a linked list memory is not necessarilly contiguous therefore it might be slower than arrays "Introduction to Algorithms" 3rd Edition"
     """
 
+    ########################################## Basic functionality ###########################################
     def __init__(self,head = None, tail=None, size = 0):
         """ Initializes an empty list """
         self.head = head
@@ -60,11 +61,11 @@ class DoubleLinkedList:
         """ Returns the size of the linked list """
         return self.size
 
-    def __set_size(self,new_size):
+    def set_size(self,new_size):
         """ set the size of the linked list """
         self.size = new_size
 
-    ####################################### Functionality #################################################
+    ####################################### Expanded Functionality #################################################
     # computational complexity o(1)
 
     def insert_at_beginning(self, item):
@@ -72,7 +73,7 @@ class DoubleLinkedList:
             the head will point to the new node.
 
         Keyword arguments:
-        item : can be of any type 
+        param : item  can be of any type 
         """
         #  If the list is empty 
         if (self.size == 0):
@@ -108,6 +109,33 @@ class DoubleLinkedList:
             current = current.get_next()
         # Sets the tail
         self.tail = current
+
+    def convert_to_array(self):
+        """ returns an array made from the dLinkedList 
+            Mostly for testing purposes, this function converts a list
+            to an array/or list
+
+        Keyword arguments:
+        return : array 
+
+        """
+        array = []
+        # Empty list   
+        if self.size == 0:
+            print("Linked List is empty")
+            return None
+        # Starts at the head
+        current = self.head
+        # Until we reach the tail, only at tail next == None
+        while(current.get_next() != None):
+            array.append(current.get_item())
+            current = current.get_next()
+            
+        # Sets the tail
+        self.tail = current
+        array.append(current.get_item())
+        #returns array
+        return array
     
     def reverse_traverse_list(self):
         """ Iterates from the end of the double list till the begining
@@ -123,7 +151,29 @@ class DoubleLinkedList:
             current = current.get_previous()
         # Sets the head
         self.head = current
-        
+    
+
+    def reverse_convert_array(self):
+        """ returns the double linked list in an array reversed
+
+        Keyword arguments:
+        return : revered_array 
+        """
+        reversed_array = []
+        # Empty list
+        if self.size == 0:
+            print("Linked list is empty")
+            return None
+        # Starts at the tail
+        current = self.tail
+        # Untill we reach the head, only at head previous == None
+        while(current.get_previous() != None):
+            reversed_array.append(current.get_item())
+            current = current.get_previous()
+        # Sets the head
+        self.head = current
+        reversed_array.append(current.get_item())
+        return reversed_array
     
     def print_list(self):
         """ prints the content of the list """
@@ -133,11 +183,11 @@ class DoubleLinkedList:
             return None
         # Starts at head
         current = self.head
-        print(current.GetItem())
+        print(current.get_item())
         # Print all elements until the end
         while(current.get_next() != None):
             current = current.get_next()
-            print(current.GetItem())
+            print(current.get_item())
 
     def reverse_print_list(self):
         """ prints the content of the list """
@@ -147,20 +197,21 @@ class DoubleLinkedList:
             return None
         # Starts at tail
         current = self.tail
-        print(current.GetItem())
+        print(current.get_item())
         # Print all elements until the end
         while(current.get_previous() != None):
             current = current.get_previous()
-            print(current.GetItem())
+            print(current.get_item())
 
 
     # computational complexity o(n)
-    def insert_at_end(self,item):
-        """ inserts a node containing item after the tail
-            the tail will point to the new node.
+    def add_at_end(self,item):
+        """ Adds a node to the end of the double linked list
+
+            The tail will point to the new node.
 
         Keyword arguments:
-        item : can be of any type 
+        param : item  can be of any type 
         """
         # Empty list
         if self.size == 0:
@@ -178,19 +229,19 @@ class DoubleLinkedList:
 
     
     def insert(self,pos,item):
-        """ inserts a node containing item before a certain position
+        """ inserts a node containing item BEFORE a certain position
         this function uses the power of double linked list. since we have two pointers we either
         iterate from the head or tail depending on the size and the position
         so O(n/2)
 
         Keyword arguments:
         pos : a postive integer of the position
-        item : can be of any type 
+        param : item  can be of any type 
 
         """
         # Invalid size
         if  self.size == 0:
-            print("Empty list")
+            print(f"Empty list @ function insert")
             return -1
 
         # Invalid position
@@ -229,59 +280,111 @@ class DoubleLinkedList:
             for position in range((self.size - pos)):
                 current = current.get_previous()
             # Insert the node 
-            new_node.set_previous(current)
             new_node.set_next(current.get_next())
+            new_node.set_previous(current)
             current.get_next().set_previous(new_node)
             current.set_next(new_node)
             # Update the size
             self.size += 1
-             
+        return 0
+            
+    def delete_from_beginning(self):
+        """ deletes the first node/head 
+        
+        the head will point to the next node
 
-    
-    
-    def deleteFromBeginning(self):
-        if self.head == None: # empty list
+        """
+        if self.size == 0: # empty list
             return None
-        self.head = self.head.get_next()
-    
-    def deleteFromEnd(self):
-        if (self.head == None or self.head.get_next() == None):
+        # single node, tail and head point to the same node
+        if self.size == 1:
             self.head = None
-            return
-        current = self.head
-        while(current.get_next().get_next() != None):
-            current = current.get_next()
-        current.set_next(None) 
-        self.tail = current
+            self.tail = None
+            self.size += -1
+            return None
+        #multiple nodes, tail and head point to different nodes
+        self.head = self.head.get_next()
+        self.head.set_previous(None)
+        self.size += -1
+
+        return None        
+    
+    def delete_from_end(self):
+        """ delete the last node/tail
+
+        the tail will point to the previous node
+        """
+        # Empty list
+        if self.size == 0:
+           return None
+        # One node
+        if self.size == 1:
+            self.head = None
+            self.tail = None
+            self.size += -1
+            return None
+        # multiple nodes
+        self.tail = self.tail.get_previous()
+        self.tail.set_next(None)
+        self.size += -1
+        return None
 
     #TODO: check the return    
     def delete(self, pos):
-        if self.head == None:
-            return -1 
-        if pos == 0:
-            self.deleteFromBeginning()
-            return None
-        if pos < 0:
+        """ delete the last node/tail
+
+        the tail will point to the previous node
+        """
+        # Empty List
+        if self.size == 0:
             return -1
-        current  = self.head
-        for position in range(pos-1):# quick reminder range will be from 0 to pos -1 
-            current = current.get_next()
-            if current is self.tail:
-                print('''Overflow, please chose a different pos
-                      returning linked list unchanged''')
-                return -1 
-        temp = current.get_next()
-        current.set_next(temp.get_next())
-        temp.set_next(None)
+        # Invalid position
+        if pos < 0 or pos > self.size -1:
+            print("Invalid Position")
+            return -1
+        # Special case of one node is taken care of 
+        # with delete_from_beginning 
+        if pos == 0:
+            return self.delete_from_beginning()
+            
+        
+        # Special case of one node is taken care of 
+        # with delete_from_end    
+        if pos == self.size -1:
+            return self.delete_from_end()
+        
+        # We are going to use the fact we have a head and tail references
+        # if pos < size/2 +1 (if odd) , the head 
+        if pos < (math.ceil(self.size/ 2.0)):
+            current = self.head
+            for position in range(pos-1):
+                current = current.get_next()
+            # Delete the node            
+            current.set_next(current.get_next().get_next())
+            current.get_next().set_previous(current)
+            # Update the size
+            self.size += -1
+        # Else the position belong to the second half of the list, start from the tail
+        else:
+            current = self.tail
+            for position in range((self.size - pos)):
+                current = current.get_previous()
+            # Delete the node 
+            current.set_next(current.get_next().get_next())
+            current.get_next().set_previous(current)
+            # Update the size
+            self.size += -1
+        return 0
+            
         
     def search(self,key): 
         '''A query that given a linked list and a key returns
             a reference to the node containing the key or none '''
         current = self.head
-        if current.GetItem() == key: # first case 
+        if current.get_item() == key: # first case 
             return current
         while(current != None):
-            if (current.GetItem() == key):
+            if (current.get_item() == key):
                 return current
             current = current.get_next()
             
@@ -321,8 +424,8 @@ class LinkedNumber(DoubleLinkedList):
         ref_to_minimum = None
         
         while(current  != None):
-            if (current.GetItem() < minimum):
-                minimum = current.GetItem()
+            if (current.get_item() < minimum):
+                minimum = current.get_item()
                 ref_to_minimum = current     
             current = current.get_next()
             
@@ -344,8 +447,8 @@ class LinkedNumber(DoubleLinkedList):
         ref_to_max = None
         
         while(current != None):
-            if (current.GetItem() > maximum):
-                maximum = current.GetItem()
+            if (current.get_item() > maximum):
+                maximum = current.get_item()
                 ref_to_max = current
             current = current.get_next()
             
@@ -378,8 +481,8 @@ class LinkedNumber(DoubleLinkedList):
         while(current != None):
             if (current is max):
                 current = current.get_next() # skip
-            elif (current.GetItem() > second_maximum):
-                second_maximum = current.GetItem()
+            elif (current.get_item() > second_maximum):
+                second_maximum = current.get_item()
                 successor_ref = current
                
                 current = current.get_next()
@@ -407,9 +510,9 @@ class LinkedNumber(DoubleLinkedList):
         while(current != None):
             if (current is min):
                 current = current.get_next() # skip
-            elif (current.GetItem() < second_minimum):
+            elif (current.get_item() < second_minimum):
                 
-                second_minimum = current.GetItem()
+                second_minimum = current.get_item()
                 predecessor_ref= current
                
                 current = current.get_next()
