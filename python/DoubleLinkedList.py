@@ -67,7 +67,7 @@ class DoubleLinkedList:
 
     ####################################### Expanded Functionality #################################################
     # computational complexity o(1)
-
+    ######################################################################################################
     def insert_at_beginning(self, item):
         """ inserts a node containing item before the head.
             the head will point to the new node.
@@ -82,7 +82,7 @@ class DoubleLinkedList:
             self.head = new_node
             self.tail = new_node
             self.size += 1
-            return
+            return 0
         # If the list is not empty 
         new_node = DoubleNode(item,self.head,None)
         # Inserts before the current head
@@ -90,7 +90,7 @@ class DoubleLinkedList:
         # Assigns head to the new node
         self.head = new_node
         self.size += 1
-        return 
+        return 0
 
     
     # computational complexity o(n)
@@ -101,7 +101,7 @@ class DoubleLinkedList:
         # Empty list   
         if self.size == 0:
             print("Linked List is empty")
-            return None
+            return - 1
         # Starts at the head
         current = self.head
         # Until we reach the tail, only at tail next == None
@@ -109,7 +109,8 @@ class DoubleLinkedList:
             current = current.get_next()
         # Sets the tail
         self.tail = current
-
+        
+        return 0
     def convert_to_array(self):
         """ returns an array made from the dLinkedList 
             Mostly for testing purposes, this function converts a list
@@ -123,7 +124,7 @@ class DoubleLinkedList:
         # Empty list   
         if self.size == 0:
             print("Linked List is empty")
-            return None
+            return - 1
         # Starts at the head
         current = self.head
         # Until we reach the tail, only at tail next == None
@@ -143,7 +144,7 @@ class DoubleLinkedList:
         # Empty list
         if self.size == 0:
             print("Linked list is empty")
-            return None
+            return - 1
         # Starts at the tail
         current = self.tail
         # Untill we reach the head, only at head previous == None
@@ -151,19 +152,20 @@ class DoubleLinkedList:
             current = current.get_previous()
         # Sets the head
         self.head = current
+        return 0
     
 
     def reverse_convert_array(self):
         """ returns the double linked list in an array reversed
 
         Keyword arguments:
-        return : revered_array 
+        return : reversed_array 
         """
         reversed_array = []
         # Empty list
         if self.size == 0:
             print("Linked list is empty")
-            return None
+            return - 1
         # Starts at the tail
         current = self.tail
         # Untill we reach the head, only at head previous == None
@@ -180,7 +182,7 @@ class DoubleLinkedList:
         # Empty list
         if self.size == 0:
             print("Linked List is empty")
-            return None
+            return - 1
         # Starts at head
         current = self.head
         print(current.get_item())
@@ -188,13 +190,14 @@ class DoubleLinkedList:
         while(current.get_next() != None):
             current = current.get_next()
             print(current.get_item())
+        return 0
 
     def reverse_print_list(self):
         """ prints the content of the list """
         # Empty list
         if self.size == 0:
             print("Linked List is empty")
-            return None
+            return - 1
         # Starts at tail
         current = self.tail
         print(current.get_item())
@@ -202,7 +205,7 @@ class DoubleLinkedList:
         while(current.get_previous() != None):
             current = current.get_previous()
             print(current.get_item())
-
+        return 0
 
     # computational complexity o(n)
     def add_at_end(self,item):
@@ -219,13 +222,13 @@ class DoubleLinkedList:
             self.head = new_node
             self.tail = new_node
             self.size += 1
-            return
+            return 0
 
         node = DoubleNode(item,None,self.tail) # since it is an end node
         self.tail.set_next(node)
         self.tail = node
         self.size += 1
-        return
+        return 0
 
     
     def insert(self,pos,item):
@@ -295,19 +298,20 @@ class DoubleLinkedList:
 
         """
         if self.size == 0: # empty list
-            return None
+            return -1
         # single node, tail and head point to the same node
         if self.size == 1:
             self.head = None
             self.tail = None
             self.size += -1
-            return None
+            return 0
         #multiple nodes, tail and head point to different nodes
         self.head = self.head.get_next()
+        self.head.get_previous().set_next(None)
         self.head.set_previous(None)
         self.size += -1
 
-        return None        
+        return 0      
     
     def delete_from_end(self):
         """ delete the last node/tail
@@ -316,22 +320,22 @@ class DoubleLinkedList:
         """
         # Empty list
         if self.size == 0:
-           return None
+           return - 1
         # One node
         if self.size == 1:
             self.head = None
             self.tail = None
             self.size += -1
-            return None
+            return 0
         # multiple nodes
         self.tail = self.tail.get_previous()
         self.tail.set_next(None)
         self.size += -1
-        return None
+        return 0
 
     #TODO: check the return    
     def delete(self, pos):
-        """ delete the last node/tail
+        """ delete at a position
 
         the tail will point to the previous node
         """
@@ -378,8 +382,9 @@ class DoubleLinkedList:
             
         
     def search(self,key): 
-        '''A query that given a linked list and a key returns
-            a reference to the node containing the key or none '''
+        ''' Returns a reference to a node containing key
+
+        '''
         current = self.head
         if current.get_item() == key: # first case 
             return current
@@ -396,8 +401,8 @@ class DoubleLinkedList:
     
 class LinkedNumber(DoubleLinkedList):
     '''Inherits SimpleLinkedList , adds some functionality for number'''
-    def __init__(self,head = None,tail=None,max=0,min = 0):
-        super().__init__(head,tail)
+    def __init__(self,head = None,tail=None,max=0,min = 0,size =0):
+        super().__init__(head,tail,size)
         self.min = 0 
         self.max = 0
 
@@ -410,8 +415,7 @@ class LinkedNumber(DoubleLinkedList):
         return self.min
 
     def minimum(self): #
-        # depends on the values of the items
-        # assuming set of real numbers 
+        """ Returns the minimum of an unsorted linked list """
         if self.head == None:
             print("Emtpy list ")
             return -1
@@ -432,12 +436,11 @@ class LinkedNumber(DoubleLinkedList):
         self.min = ref_to_minimum
         
     def maximum (self): # to implement after implementing a sort
-    
-        # depends on the values of the items
-        # assuming set of real numbers 
+        """ Returns the maximum of an unsorted linked list """
+
         if self.head == None:
             print("Emtpy list ")
-            return None
+            return - 1
         if self.head.get_next() == None:
             return self.head
         
@@ -452,7 +455,6 @@ class LinkedNumber(DoubleLinkedList):
                 ref_to_max = current
             current = current.get_next()
             
-                
         self.max = ref_to_max
     
 
@@ -465,13 +467,13 @@ class LinkedNumber(DoubleLinkedList):
 
     def successor(self): # o(2n) worst case ! o(n) is max is in the begining
 
-        ''' First method  is easiest to implement, find max first and then compare to max the successor'''
+        """Returns the second larget number in a double linked list """
         successor_ref = None
         if self.head == None:
             print("Emtpy list ")
-            return None
+            return - 1
         if self.head.get_next() == None:
-            return None
+            return - 1
         
         second_maximum = -math.inf 
         
@@ -492,15 +494,15 @@ class LinkedNumber(DoubleLinkedList):
 
         return successor_ref 
         
-     
+
     def predecessor(self):
-        ''' First method  is easiest to implement, find max first and then compare to max the successor'''
+        """ Return second smallest number in an unsorted linked list """
         predecessor_ref = None
         if self.head == None:
             print("Emtpy list ")
-            return None
+            return - 1
         if self.head.get_next() == None:
-            return None
+            return - 1
         
         second_minimum = + math.inf 
         

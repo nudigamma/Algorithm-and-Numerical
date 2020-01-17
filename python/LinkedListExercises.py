@@ -68,6 +68,8 @@ def rMax(Node,max):
         if(Node.get_item() > max):
             max = Node.get_item()
         return rMax(Node.get_next(),max)
+
+
 def reverseList(list_to_reverse):
     ''' reverse list ex 1.3.30 '''
     next_ref = list_to_reverse.get_head()
