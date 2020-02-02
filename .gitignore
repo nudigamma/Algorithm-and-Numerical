@@ -1,1 +1,71 @@
-test
+#compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.m~
+*.Po
+emsim
+EMSIM/src/emsim
+EMSIM/src/run/emsim
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.dat
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+# Folders #
+
+Analysis/scaterring_parameters
+VerifyEMSIM/Test1
+EMSIM/01
+EMSIM/02
+EMSIM/03
+EMSIM/04
+EMSIM/05
+EMSIM/06
+EMSIM/07
+EMSIM/08
+EMSIM/09
+EMSIM/10
+EMSIM/11
+EMSIM/12
+EMSIM/13
+EMSIM/14
+EMSIM/15
+EMSIM/16
+EMSIM/src/run
+EMSIM/libtool
+EMSIM/autom4te.cache/*
+pathdef.m
+#Binary matlab files
+*.mat
+#binary images
+*.bmp
+*.csv
+*.nii
