@@ -1,21 +1,23 @@
 /**
  * This file does the following
- * 1.  Using ITK reads a RGB 2D image from Disk
- * 2.  
- * 3.  Creates 3 Buffers ( for R ,G and B) 
- * 4.  Export ImageType(itk) pixels to R , G and B host 
- * 5.  Compute the grey scale according to the formula  L = r*0.21 + g* 0.72 + b * 0.07 
- * 6.  
- * 7.  Display RGB picture with host grey scale image. 
- * 8.  Create device R, G , B and L 
- * 9.  Move memory from host R , G B to device R G B 
- * 10. Launch kernel to compute Luminance on gpu
- * 11. Fetch memory to host 
- * 12. Create itk image for luminance
- * 13. Export computed luminance to itk image
- * 14. Display host luminance, gpu luminance and rgb image
- * 15. Free up stuff and exit
- * 16. **/
+ * 1.  Using ITK reads a RGB 2D image from Disk [Done]
+ * 2.  Using ITK to vtk glue display 2D image   [Done]
+ * 3.  Do to gray scale example with pure itk 
+ * 4   Display results
+ * 5.  Creates 3 Buffers ( for R ,G and B) -> Use ImageRegionIterator example 
+ * 6.  Export ImageType(itk) pixels to R , G and B host 
+ * 7.  Compute the grey scale according to the formula  L = r*0.21 + g* 0.72 + b * 0.07 
+ * 8.  
+ * 9.  Display RGB picture with host grey scale image. 
+ * 10.  Create device R, G , B and L 
+ * 11.  Move memory from host R , G B to device R G B 
+ * 12. Launch kernel to compute Luminance on gpu
+ * 13. Fetch memory to host 
+ * 14. Create itk image for luminance
+ * 15. Export computed luminance to itk image
+ * 16. Display host luminance, gpu luminance and rgb image
+ * 17. Free up stuff and exit
+ * 18. **/
 
 
 // typedef , these can be moved to head most probably
@@ -32,52 +34,40 @@ using output_ImageType = itk::Image<GreyPixelType,DIMENSION>;
 using ImageFileReaderType = itk::ImageFileReader<input_ImageType>;
 using ImageFileWriterType = itk::ImageFileWriter<output_ImageType>;
 
-//using ConvertVTKToITKType = itk::ImageToVTKImageFilter<input_ImageType>;
+using ConstImageIteratorType = itk::ImageRegionConstIterator<input_ImageType>;
+using IteratorType = itk::ImageRegionIterator<output_ImageType>;
 
-//using RescaleFilterType = itk::RescaleIntensityImageFilter<input_ImageType,input_ImageType>;
 int
 main(int argc, const char * argv[])
 {
-    if (argc < 3)
+  if (argc < 3)
     {    
-        std::cerr << "Usage rgb2gray input_image output_image";
-        std::cerr << std::endl;
-        exit(-1);
-    }
-ImageFileReaderType::Pointer ImageReaderPtr = ImageFileReaderType::New();
-ImageReaderPtr->SetFileName(argv[1]);
-ImageReaderPtr->Update();
+      std::cerr << "Usage rgb2gray input_image output_image";
+      std::cerr << std::endl;
+      exit(-1);
+    } // end of insuficient command line input condition
 
-input_ImageType::Pointer rgbImage = ImageReaderPtr->GetOutput();
+  ImageFileReaderType::Pointer ImageReaderPtr = ImageFileReaderType::New();
+  ImageReaderPtr->SetFileName(argv[1]);
 
-//RescaleFilterType::Pointer rescaleFilterPtr = RescaleFilterType::New();
+  try
+  {
+    ImageReaderPtr->Update();
+  }
+  catch (itk::ExceptionObject &err)
+  {
+    std::cerr << "ExceptionObject caught !" << std::endl;
+    std::cerr << err << std::endl;
+    return EXIT_FAILURE;
+  } // end of try catch block of reading image from disk
 
-//rescaleFilterPtr->SetInput(ImageReaderPtr->GetOutput());
-//rescaleFilterPtr->SetOutputMinimum(0);
-//rescaleFilterPtr->SetOutputMaximum(255);
-
-QuickView viewer;
-viewer.AddImage(ImageReaderPtr->GetOutput());
-//viewer.AddImage(RescaleFilterPtr->GetOutput());
-viewer.Visualize();
-/*
-ImageFileWriterType::Pointer ImageWriterPtr = ImageFileWriterType::New();
-
-ImageWriterPtr->SetFileName(argv[2]);
-ImageWriterPtr->SetInput(ImageReaderPtr->GetOutput());
+  input_ImageType::Pointer rgbImage = ImageReaderPtr->GetOutput();
 
 
-try
-    {
-        ImageWriterPtr->Update();
-    }
-catch (const itk::ExceptionObject &exp)
-    {
-        std::cerr <<"Writing image to disk exception caugh";
-        std::cerr << exp << std::endl;
-        return EXIT_FAILURE;
-    }
-**/
+  QuickView viewer;
+  viewer.AddImage(ImageReaderPtr->GetOutput());
+  viewer.Visualize();
 
-return EXIT_SUCCESS;
+
+  return EXIT_SUCCESS;
 }//end of function main
