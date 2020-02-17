@@ -2,15 +2,15 @@
  * This file does the following
  * 1.  Using ITK reads a RGB 2D image from Disk [Done]
  * 2.  Using ITK to vtk glue display 2D image   [Done]
- * 3.  Do to gray scale example with pure itk one thread , lines and then regions !
- * 4   Display results
- * 5.  Creates 3 Buffers ( for R ,G and B) -> Use ImageRegionIterator example 
- * 6.  Export ImageType(itk) pixels to R , G and B host 
- * 7.  Compute the grey scale according to the formula  L = r*0.21 + g* 0.72 + b * 0.07 
- * 8.  
+ * 3.  Do to gray scale example with pure itk  [Done]
+ * 4   Display results [Done]
+ * 5.  Time it 
+ * 6.  Creates 3 Buffers ( for R ,G and B) -> Use ImageRegionIterator example 
+ * 7.  Export ImageType(itk) pixels to R , G and B host 
+ * 8.  Compute the grey scale according to the formula  L = r*0.21 + g* 0.72 + b * 0.07 
  * 9.  Display RGB picture with host grey scale image. 
- * 10.  Create device R, G , B and L 
- * 11.  Move memory from host R , G B to device R G B 
+ * 10. Create device R, G , B and L 
+ * 11. Move memory from host R , G B to device R G B 
  * 12. Launch kernel to compute Luminance on gpu
  * 13. Fetch memory to host 
  * 14. Create itk image for luminance
@@ -39,6 +39,14 @@ using ImageFileWriterType = itk::ImageFileWriter<output_ImageType>;
 
 using ConstImageIteratorType = itk::ImageRegionConstIterator<input_ImageType>;
 using IteratorType = itk::ImageRegionIterator<output_ImageType>;
+
+
+__device__ __host__ int 
+rgb2gray(RGBPixelType::ValueType red, RGBPixelType::ValueType green, RGBPixelType::ValueType blue)
+{
+  int r = itk::NumericTraits<int>
+  return itk::NumericTraits<int> (R_MULTIPLIER*r + 
+}
 
 int
 main(int argc, const char * argv[])
@@ -79,14 +87,15 @@ main(int argc, const char * argv[])
 
   inputIt.GoToBegin();
   outputIt.GoToBegin();
-
+  
   while(!inputIt.IsAtEnd())
   { 
 
     int grey = (int) ((float) inputIt.Get().GetRed() * R_MULTIPLIER + (float)inputIt.Get().GetGreen() * G_MULTIPLIER + (float)inputIt.Get().GetBlue() * B_MULTIPLIER );
-    ::std::cout<<  itk::NumericTraits<RGBPixelType::ValueType>::PrintType(inputIt.Get().GetRed())
-    << std::endl;
+    
     outputIt.Set(grey); 
+    ++inputIt;
+    ++outputIt;
   }
 
   QuickView viewer;
