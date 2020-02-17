@@ -41,11 +41,13 @@ using ConstImageIteratorType = itk::ImageRegionConstIterator<input_ImageType>;
 using IteratorType = itk::ImageRegionIterator<output_ImageType>;
 
 
-__device__ __host__ int 
+int 
 rgb2gray(RGBPixelType::ValueType red, RGBPixelType::ValueType green, RGBPixelType::ValueType blue)
 {
-  int r = itk::NumericTraits<int>
-  return itk::NumericTraits<int> (R_MULTIPLIER*r + 
+  int r = (int) red;
+  int g = (int) green;
+  int b = (int) blue;
+  return  (R_MULTIPLIER*r + G_MULTIPLIER*g + B_MULTIPLIER*b); 
 }
 
 int
@@ -91,7 +93,7 @@ main(int argc, const char * argv[])
   while(!inputIt.IsAtEnd())
   { 
 
-    int grey = (int) ((float) inputIt.Get().GetRed() * R_MULTIPLIER + (float)inputIt.Get().GetGreen() * G_MULTIPLIER + (float)inputIt.Get().GetBlue() * B_MULTIPLIER );
+    int grey = rgb2gray(inputIt.Get().GetRed(),inputIt.Get().GetGreen() ,inputIt.Get().GetBlue() );
     
     outputIt.Set(grey); 
     ++inputIt;
