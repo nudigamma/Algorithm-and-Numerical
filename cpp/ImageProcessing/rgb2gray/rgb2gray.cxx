@@ -2,7 +2,7 @@
  * This file does the following
  * 1.  Using ITK reads a RGB 2D image from Disk [Done]
  * 2.  Using ITK to vtk glue display 2D image   [Done]
- * 3.  Do to gray scale example with pure itk 
+ * 3.  Do to gray scale example with pure itk one thread , lines and then regions !
  * 4   Display results
  * 5.  Creates 3 Buffers ( for R ,G and B) -> Use ImageRegionIterator example 
  * 6.  Export ImageType(itk) pixels to R , G and B host 
@@ -25,6 +25,9 @@
 #include <iostream>
 
 constexpr int DIMENSION = 2;
+constexpr float R_MULTIPLIER = 0.21;
+constexpr float G_MULTIPLIER = 0.72;
+constexpr float B_MULTIPLIER = 0.07;
 using GreyPixelType = unsigned short;
 using RGBPixelType = itk::RGBPixel<unsigned char>;
 
@@ -62,10 +65,33 @@ main(int argc, const char * argv[])
   } // end of try catch block of reading image from disk
 
   input_ImageType::Pointer rgbImage = ImageReaderPtr->GetOutput();
+  //start defining output image
 
+  output_ImageType::Pointer outputImage = output_ImageType::New();
+  outputImage->SetRegions(rgbImage->GetRequestedRegion());
+  // Just meta data ( I think )
+  outputImage->CopyInformation(rgbImage);
+  outputImage->Allocate();
+
+  ConstImageIteratorType inputIt(rgbImage,rgbImage->GetRequestedRegion());
+  IteratorType outputIt(outputImage,outputImage->GetRequestedRegion());
+
+
+  inputIt.GoToBegin();
+  outputIt.GoToBegin();
+
+  while(!inputIt.IsAtEnd())
+  { 
+
+    int grey = (int) ((float) inputIt.Get().GetRed() * R_MULTIPLIER + (float)inputIt.Get().GetGreen() * G_MULTIPLIER + (float)inputIt.Get().GetBlue() * B_MULTIPLIER );
+    ::std::cout<<  itk::NumericTraits<RGBPixelType::ValueType>::PrintType(inputIt.Get().GetRed())
+    << std::endl;
+    outputIt.Set(grey); 
+  }
 
   QuickView viewer;
-  viewer.AddImage(ImageReaderPtr->GetOutput());
+  viewer.AddImage(rgbImage.GetPointer());
+  viewer.AddImage(outputImage.GetPointer());
   viewer.Visualize();
 
 
