@@ -1,2 +1,2 @@
-# Algorithms-and-Data-structures
-Implementation of Algorithms and Data structures in C++ and Python 3.x
+# Algorithms and Numerical computing
+Implementation of Algorithms and scientific computations in matlab c++, python 3 and Julia.
