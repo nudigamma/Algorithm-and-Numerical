@@ -4,30 +4,33 @@
  * 2.  Using ITK to vtk glue display 2D image   [Done]
  * 3.  Do to gray scale example with pure itk  [Done]
  * 4   Display results [Done]
- * 5.  Time it 
- * 6.  Creates 3 Buffers ( for R ,G and B) -> Use ImageRegionIterator example 
- * 7.  Export ImageType(itk) pixels to R , G and B host 
- * 8.  Compute the grey scale according to the formula  L = r*0.21 + g* 0.72 + b * 0.07 
- * 9.  Display RGB picture with host grey scale image. 
- * 10. Create device R, G , B and L 
- * 11. Move memory from host R , G B to device R G B 
- * 12. Launch kernel to compute Luminance on gpu
- * 13. Fetch memory to host 
- * 14. Create itk image for luminance
- * 15. Export computed luminance to itk image
- * 16. Display host luminance, gpu luminance and rgb image
- * 17. Free up stuff and exit
- * 18. **/
+ * 5.  Time it [Done]
+ * 6.  Make Rgb2gray templated [Done]
+ * 7.  Compute the grey scale according to the formula  L = r*0.21 + g* 0.72 + b * 0.07 [Done]
+ * 8.  Export ImageType(itk) pixels to R , G and B host [Done] 
+ * 9.  Create an image class to handle basic images meta handling
+ * 10. Do to rgb2gray example with C++ 
+ * 11. import back rgb2gray image to itk
+ * 12. Display RGB picture with non itk grey scale image. 
+ * 13. Create device R, G , B and L 
+ * 14. Move memory from host R , G B to device R G B 
+ * 15. Launch kernel to compute Luminance on gpu
+ * 16. Fetch memory to host 
+ * 17. Create itk image for luminance
+ * 18. Export computed luminance to itk image
+ * 19. Display host luminance, gpu luminance and rgb image
+ * 20. Compare GPU versus CPU multiple runs using itk::TimeProbe
+ * 21. Free up stuff and exit
+ * 22. Rinse and repeat, make sure things are const and passed by reference and ... 
+ * 23. ... other cool stuff 
+ * 24. **/
 
 
 // typedef , these can be moved to head most probably
 #include "rgb2gray.hxx"
 #include <iostream>
 
-constexpr int DIMENSION = 2;
-constexpr float R_MULTIPLIER = 0.21;
-constexpr float G_MULTIPLIER = 0.72;
-constexpr float B_MULTIPLIER = 0.07;
+
 using GreyPixelType = unsigned short;
 using RGBPixelType = itk::RGBPixel<unsigned char>;
 
@@ -41,18 +44,33 @@ using ConstImageIteratorType = itk::ImageRegionConstIterator<input_ImageType>;
 using IteratorType = itk::ImageRegionIterator<output_ImageType>;
 
 
-int 
-rgb2gray(RGBPixelType::ValueType red, RGBPixelType::ValueType green, RGBPixelType::ValueType blue)
-{
-  int r = (int) red;
-  int g = (int) green;
-  int b = (int) blue;
-  return  (R_MULTIPLIER*r + G_MULTIPLIER*g + B_MULTIPLIER*b); 
+
+int *  itkRGB2CbufferRGB (input_ImageType::Pointer RGB)
+{ /** Implementing the RGB c++ buffer as implemented in the book Programmign Massively
+      Parellel Computing page 52 Figure 3.4 , the R, G and B values are contiguous in memory**/
+
+  std::vector<int> CPPBuffRGB;
+  // not needed
+  ConstImageIteratorType inputIt(RGB ,RGB->GetRequestedRegion());
+  inputIt.GoToBegin();
+  while(!inputIt.IsAtEnd())
+  
+  {
+    CPPBuffRGB.push_back(inputIt.Get().GetRed());
+    CPPBuffRGB.push_back(inputIt.Get().GetGreen());
+    CPPBuffRGB.push_back(inputIt.Get().GetBlue());
+  }
+  return &CPPBuffRGB[0];
 }
 
+
+// Main starts here
 int
 main(int argc, const char * argv[])
 {
+
+  itk::TimeProbe clock;
+
   if (argc < 3)
     {    
       std::cerr << "Usage rgb2gray input_image output_image";
@@ -62,6 +80,7 @@ main(int argc, const char * argv[])
 
   ImageFileReaderType::Pointer ImageReaderPtr = ImageFileReaderType::New();
   ImageReaderPtr->SetFileName(argv[1]);
+
 
   try
   {
@@ -89,7 +108,7 @@ main(int argc, const char * argv[])
 
   inputIt.GoToBegin();
   outputIt.GoToBegin();
-  
+  clock.Start();
   while(!inputIt.IsAtEnd())
   { 
 
@@ -99,7 +118,9 @@ main(int argc, const char * argv[])
     ++inputIt;
     ++outputIt;
   }
-
+  clock.Stop();
+  std::cout <<"Total " << clock.GetTotal() << std::endl;
+  clock.Report();
   QuickView viewer;
   viewer.AddImage(rgbImage.GetPointer());
   viewer.AddImage(outputImage.GetPointer());
