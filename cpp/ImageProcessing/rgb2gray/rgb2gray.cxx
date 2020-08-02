@@ -7,7 +7,7 @@
  * 5.  Time it [Done]
  * 6.  Make Rgb2gray templated [Done]
  * 7.  Compute the grey scale according to the formula  L = r*0.21 + g* 0.72 + b * 0.07 [Done]
- * 8.  Export ImageType(itk) pixels to R , G and B host [Done] 
+ * 8.  Export ImageType(itk) pixels to R , G and B to a host  [Done] 
  * 9.  Create an image class to handle basic images meta handling
  * 10. Do to rgb2gray example with C++ 
  * 11. import back rgb2gray image to itk
@@ -45,7 +45,7 @@ using IteratorType = itk::ImageRegionIterator<output_ImageType>;
 
 
 
-int *  itkRGB2CbufferRGB (input_ImageType::Pointer RGB)
+std::vector<int>  itkRGB2CbufferRGB (input_ImageType::Pointer RGB)
 { /** Implementing the RGB c++ buffer as implemented in the book Programmign Massively
       Parellel Computing page 52 Figure 3.4 , the R, G and B values are contiguous in memory**/
 
@@ -60,15 +60,14 @@ int *  itkRGB2CbufferRGB (input_ImageType::Pointer RGB)
     CPPBuffRGB.push_back(inputIt.Get().GetGreen());
     CPPBuffRGB.push_back(inputIt.Get().GetBlue());
   }
-  return &CPPBuffRGB[0];
+  return CPPBuffRGB;
 }
 
 
 // Main starts here
-int
-main(int argc, const char * argv[])
+int main(int argc, const char * argv[])
 {
-
+  // compare GPU/CPU 
   itk::TimeProbe clock;
 
   if (argc < 3)
@@ -80,7 +79,6 @@ main(int argc, const char * argv[])
 
   ImageFileReaderType::Pointer ImageReaderPtr = ImageFileReaderType::New();
   ImageReaderPtr->SetFileName(argv[1]);
-
 
   try
   {
