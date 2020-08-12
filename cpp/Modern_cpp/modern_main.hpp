@@ -7,6 +7,10 @@ modern cpp learning */
 #include "braces_initialization.hpp"
 #include "pass_by_ref_val.hpp"
 #include "simple_for.hpp"
+#include "dynamic_assert.hpp"
+#include "output_file_stream.hpp"
+#include "some_stream_manip.hpp"
+
 /*
 #include "taylor_exponentials.hpp"
 #include "sin.hpp"

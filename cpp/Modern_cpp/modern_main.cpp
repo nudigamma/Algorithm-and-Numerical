@@ -21,7 +21,10 @@ int main(int argc, char** argv)
         cout << "Type 1 to show case the conditional operator ? : \n";
         cout << "Type 2 to show case non-narrowing initialization \"{}\", C++ keywords \"auto\"  and \"constexper\" \n";
         cout << "Type 3 to show case passing by value and passing by ref \n";
-        cout << "Type 4 to demonstate simple for loop"
+        cout << "Type 4 to demonstrate simple for loop \n";
+        cout << "Type 5 to demonstrate assert \n";
+        cout << "Type 6 to demonstrate output file stream which write squares \n";
+        cout << "Type 7 to demonstrate output file stream inheritance \n";
         cin >> selection;
         //cout << type_info(selection) << endl;
         switch(selection)
@@ -40,6 +43,27 @@ int main(int argc, char** argv)
                 pass_by_ref_val();
                 print_new_lines();
             break;
+            
+            case 4:
+                simple_for();
+                print_new_lines();
+            break;
+            
+            case 5:
+                dynamic_assert();
+                print_new_lines();
+            break;
+            
+            case 6:
+                output_file_stream("squares.txt");
+                print_new_lines();
+            break;
+            
+             case 7:
+                some_stream_manip();
+                print_new_lines();
+            break;
+
 
             case 999:
                 cout <<"Exiting \n";
