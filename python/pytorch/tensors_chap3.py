@@ -36,16 +36,16 @@ batch_t = torch.randn(2,3,5,5)
 
 # mean  
 im_t = torch.tensor([[ [1.,2.],[3.,4.],[5.,6.] ],[[7.,8.],[9.,10.],[11.,12.]]])
-print(im_t)
+#print(im_t)
 mean_y = im_t.mean(-1) #accross columns
-print(mean_y)
+#print(mean_y)
 mean_x = im_t.mean(-2) #across rows
-print(mean_x) 
+#print(mean_x) 
 mean_z = im_t.mean(-3) #across planes
-print(mean_z)
+#print(mean_z)
 
 
-print(weights.shape)
+#print(weights.shape)
 
 img_t = torch.ones(3,5,5,dtype=torch.short).to(torch.double) #doing weighted averaging
 weights = torch.tensor([0.4,0.3,0.1],dtype=torch.float32)
@@ -53,5 +53,29 @@ weights = torch.tensor([0.4,0.3,0.1],dtype=torch.float32)
 unsqueezed_weights = weights.unsqueeze(-1).unsqueeze_(-1)
 
 weighted_img = img_t * unsqueezed_weights
-print(img_t.dtype)
+#print(img_t.dtype)
+
+points= torch.tensor([[4.0, 1.0],[5.0,3.0],[2.0,1.0]])
+
+second_point = points[1] # second row, if more dimension, points[1] will return second plane
+
+planes = torch.randn(3,3,3)
+
+#print(planes)
+
+#first_plane = planes[0]
+
+#print(first_plane) # proof 
+
+#print(second_point.storage_offset()) # first point offset is at 0, and second point is at 2, makes sense
+
+#print(planes.stride())
+
+
+#transposing without copying 
+
+points_t = points.t()
+#print(points_t)
+print(id(points.storage()) == id(points_t.storage())) # id shows object id 
+
 

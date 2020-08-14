@@ -10,7 +10,7 @@ modern cpp learning */
 #include "dynamic_assert.hpp"
 #include "output_file_stream.hpp"
 #include "some_stream_manip.hpp"
-
+#include "io_exceptions.hpp"
 /*
 #include "taylor_exponentials.hpp"
 #include "sin.hpp"

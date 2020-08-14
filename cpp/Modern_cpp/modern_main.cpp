@@ -25,6 +25,7 @@ int main(int argc, char** argv)
         cout << "Type 5 to demonstrate assert \n";
         cout << "Type 6 to demonstrate output file stream which write squares \n";
         cout << "Type 7 to demonstrate output file stream inheritance \n";
+        cout << "Type 8 to demonstrate io exceptions \n";
         cin >> selection;
         //cout << type_info(selection) << endl;
         switch(selection)
@@ -63,6 +64,12 @@ int main(int argc, char** argv)
                 some_stream_manip();
                 print_new_lines();
             break;
+            
+            case 8:
+                io_exceptions();
+                print_new_lines();
+            break;
+
 
 
             case 999:
