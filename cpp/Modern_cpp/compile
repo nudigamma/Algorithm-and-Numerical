@@ -1,1 +1,0 @@
-clang++ *.cpp -I . -o /media/nadim/PHD_DATA/bin/Modern_cpp/modern_cpp -DNDEBUG

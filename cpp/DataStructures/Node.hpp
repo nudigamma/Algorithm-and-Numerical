@@ -1,7 +1,7 @@
 #ifndef NODE_HPP
 #define NODE_HPP
 #include <cstddef>
-
+#include <memory>
 
 template <typename T>
 
@@ -19,7 +19,7 @@ public:
 
 private:
     T _item;
-    Node * _next;
+    unique_ptr<Node <T>>  _next;
 };
 
 

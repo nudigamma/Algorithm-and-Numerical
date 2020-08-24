@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <limits>
+#include <memory>
 
 #include "Node.hpp"
 //TODO: modernize 
